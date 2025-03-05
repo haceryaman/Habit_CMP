@@ -10,8 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import com.baitent.habit_compose.presentation.features.common.constants.Dimens
+import com.baitent.habit_compose.common.Dimens
 import com.baitent.habit_compose.presentation.theme.AppDimensions
 import com.baitent.habit_compose.presentation.theme.LocalColors
 
@@ -21,7 +20,6 @@ fun CustomButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     color: Color = LocalColors.current.primary,
-    gradientColors:List<Color>? = null,
     enabled: Boolean = true
 ) {
     Button(
@@ -35,10 +33,4 @@ fun CustomButton(
     ) {
      Text(text = text, fontSize = Dimens.textSize16sp, fontWeight = FontWeight.Bold)
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CustomButtonPreview() {
-    CustomButton(text = "Button", onClick = {  })
 }

@@ -1,5 +1,5 @@
 package com.baitent.habit_compose.presentation.common
-
+/*
 import android.app.Application
 import com.baitent.habit_compose.presentation.common.appModule
 import com.google.android.gms.ads.MobileAds
@@ -20,4 +20,4 @@ class MyApp: Application() {
             modules(appModule)
         }
     }
-}
+}*/

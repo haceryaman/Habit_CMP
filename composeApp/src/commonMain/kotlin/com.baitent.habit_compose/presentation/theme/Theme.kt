@@ -21,7 +21,7 @@ fun Habit_composeTheme(
 
         MaterialTheme(
           //  colorScheme = colors,
-            typography = AppTypography,
+            //typography = AppTypography,
             shapes = AppShapes,
             content = content
         )

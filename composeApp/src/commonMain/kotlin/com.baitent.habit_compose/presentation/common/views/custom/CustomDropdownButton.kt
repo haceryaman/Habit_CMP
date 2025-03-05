@@ -1,4 +1,4 @@
-package com.baitent.habit_compose.presentation.features.common.views.custom
+package com.baitent.habit_compose.presentation.common.views.custom
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,7 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.baitent.habit_compose.presentation.features.common.constants.Dimens
+import com.baitent.habit_compose.common.Dimens
 
 data class CustomDropDownButtonData(
     val id: Int,

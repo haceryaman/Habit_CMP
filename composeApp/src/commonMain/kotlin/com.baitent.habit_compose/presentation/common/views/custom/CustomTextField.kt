@@ -1,4 +1,3 @@
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -8,13 +7,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.baitent.habit_compose.presentation.theme.AppDimensions
 import com.baitent.habit_compose.presentation.theme.LocalColors
 
@@ -22,11 +15,11 @@ import com.baitent.habit_compose.presentation.theme.LocalColors
 fun CustomTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    @StringRes labelId: Int,
-    @StringRes placeholderId: Int? = null,
+    label: String,
+    placeholder: String? = null,
     isPassword: Boolean = false,
     isError: Boolean = false,
-    @StringRes errorMessageId: Int? = null,
+    errorMessage: String? = null,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -37,8 +30,8 @@ fun CustomTextField(
             onValueChange = onValueChange,
             //  label = null,
             placeholder = {
-                placeholderId?.let {
-                    Text(stringResource(id = it), style = MaterialTheme.typography.bodySmall)
+                placeholder?.let {
+                    Text(placeholder, style = MaterialTheme.typography.bodySmall)
                 }
             },
             //  visualTransformation = if (isPassword) VisualTransformation.Password else VisualTransformation.None,
@@ -51,28 +44,13 @@ fun CustomTextField(
             )
         )
 
-        if (isError && errorMessageId != null) {
+        if (isError && errorMessage != null) {
             Text(
-                text = stringResource(id = errorMessageId),
+                text = errorMessage,
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
                 //modifier = Modifier.padding(start = 16.dp, top = 4.dp)
             )
         }
     }
-}
-
-@Preview (showBackground = true)
-@Composable
-fun CustomTextFieldPreview() {
-    var value by remember { mutableStateOf("hacer yaman") }
-    CustomTextField(
-        value = value,
-        onValueChange = { value = it },
-        labelId = android.R.string.copy,
-        placeholderId = android.R.string.copy,
-        isPassword = true,
-        isError = true,
-        errorMessageId = android.R.string.copy
-    )
 }

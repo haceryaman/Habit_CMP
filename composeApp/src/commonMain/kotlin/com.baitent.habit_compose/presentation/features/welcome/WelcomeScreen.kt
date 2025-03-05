@@ -13,14 +13,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import com.baitent.habit_compose.R
+import com.baitent.habit_compose.common.AppStrings
 import com.baitent.habit_compose.presentation.common.views.custom.CustomButton
 import com.baitent.habit_compose.presentation.theme.AppDimensions
 import com.baitent.habit_compose.presentation.theme.LocalColors
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 
 @Composable
@@ -34,30 +34,19 @@ fun WelcomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(painter = painterResource(id = R.drawable.welcome), contentDescription = "Welcome")
+       // Image(painter = , contentDescription = "Welcome")
         Spacer(modifier = Modifier.height(AppDimensions.xLargeSpace))
-        Text(text = stringResource( R.string.welcome), style = MaterialTheme.typography.displayLarge)
+        Text(text = AppStrings.welcome, style = MaterialTheme.typography.displayLarge)
         Spacer(modifier = Modifier.height(AppDimensions.mediumSpace))
         Text(
-            text = stringResource(R.string.welcomeDescription),
+            text = AppStrings.welcomeDescription,
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.padding(AppDimensions.largeSpace))
-        CustomButton(text = stringResource(R.string.signUp), onClick = onSignUpClick)
+        //CustomButton(text = AppStrings.signUp), onClick = onSignUpClick)
         Spacer(modifier = Modifier.padding(AppDimensions.mediumSpace))
-        CustomButton(text = stringResource(R.string.signIn), onClick = onSignInClick)
+        //CustomButton(text = stringResource(R.string.signIn), onClick = onSignInClick)
 
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun WelcomeScreenPreview() {
-    WelcomeScreen(
-        onSignUpClick = {},
-        onSignInClick = {},
-        viewModel = WelcomeViewModel()
-    )
-}
-

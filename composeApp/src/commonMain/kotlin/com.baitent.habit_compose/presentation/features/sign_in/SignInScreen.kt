@@ -17,16 +17,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import com.baitent.habit_compose.R
-import com.baitent.habit_compose.presentation.common.items.TextFieldItem
+import com.baitent.habit_compose.common.AppStrings
+import com.baitent.habit_compose.presentation.common.views.items.TextFieldItem
 import com.baitent.habit_compose.presentation.common.views.items.AuthLabel
 import com.baitent.habit_compose.presentation.common.views.custom.CustomButton
 import com.baitent.habit_compose.presentation.common.views.custom.CustomTextButton
 import com.baitent.habit_compose.presentation.theme.AppDimensions
 import com.baitent.habit_compose.presentation.theme.LocalColors
-
 
 @Composable
 fun SigninScreen(
@@ -35,24 +32,24 @@ fun SigninScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
         AuthLabel(
-            titleId = R.string.signIn,
+            title = AppStrings.signIn,
             onClick = onSignInClick,
-            textButtonTitleId = R.string.signUp
+            textButtonTitle= AppStrings.signUp
         )
         Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
         TextFieldItem(
-            labelId = R.string.email,
-            placeholderId = R.string.emailPlaceholder,
-            errorMessageId = R.string.emailError,
+            label = AppStrings.email,
+            placeholderId = AppStrings.emailPlaceholder,
+            errorMessageId = AppStrings.emailError,
             isPassword = false,
             onValueChanged = {},
             value = ""
         )
         Spacer(modifier = Modifier.height(AppDimensions.mediumSpace))
         TextFieldItem(
-            labelId = R.string.password,
-            placeholderId = R.string.passwordPlaceholder,
-            errorMessageId = R.string.passwordError,
+            label = AppStrings.password,
+            placeholderId = AppStrings.passwordPlaceholder,
+            errorMessageId = AppStrings.passwordError,
             isPassword = false,
             onValueChanged = {},
             value = ""
@@ -76,14 +73,14 @@ fun SigninScreen(
                 )
                 Spacer(modifier = Modifier.width(AppDimensions.smallSpace))
                 Text(
-                    text = stringResource(R.string.rememberMe),
+                    text = AppStrings.rememberMe,
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
             }
 
             CustomTextButton(
-                textId = R.string.forgotPassword,
+                text = AppStrings.forgotPassword,
                 onClick = {},
                 icon = Icons.AutoMirrored.Default.KeyboardArrowRight,
                 iconColor = LocalColors.current.white
@@ -91,11 +88,11 @@ fun SigninScreen(
         }
         Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
         CustomButton(
-            text = stringResource(R.string.signIn),
+            text = AppStrings.signIn,
             onClick = {  }
         )
         CustomTextButton(
-            textId = R.string.orLoginWith,
+            text = AppStrings.orLoginWith,
             onClick = {},
             icon = Icons.AutoMirrored.Default.KeyboardArrowRight,
             iconColor = LocalColors.current.white
@@ -103,12 +100,3 @@ fun SigninScreen(
 
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun SigninScreenPreview(){
-    SigninScreen(
-        onSignInClick = {  }
-    )
-}
-

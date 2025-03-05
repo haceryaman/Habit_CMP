@@ -6,10 +6,9 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.baitent.habit_compose.R
 
 // Poppins Yazı Tipi
-val Poppins = FontFamily(
+/*val Poppins = FontFamily(
     Font(R.font.poppins_regular, FontWeight.Normal),
     Font(R.font.poppins_bold, FontWeight.Bold),
     Font(R.font.poppins_medium, FontWeight.Medium),
@@ -89,3 +88,4 @@ val AppTypography = Typography(
         letterSpacing = 0.4.sp
     )
 )
+*/

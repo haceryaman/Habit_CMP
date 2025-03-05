@@ -1,4 +1,4 @@
-package com.baitent.habit_compose.presentation.features.common.constants
+package com.baitent.habit_compose.common
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp

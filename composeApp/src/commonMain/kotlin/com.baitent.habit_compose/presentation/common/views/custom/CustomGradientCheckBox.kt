@@ -16,14 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.baitent.habit_compose.presentation.features.common.constants.Dimens
-import com.baitent.habit_compose.presentation.theme.Habit_composeTheme
+import com.baitent.habit_compose.common.Dimens
 
 
 @Composable
-fun CustomCheckBox(modifier: Modifier = Modifier,
+fun CustomCheckBox(
                    onChange:(Boolean) -> Unit,
                    isChecked:Boolean,
                    checkedBackgroundColor:List<Color> = listOf(Color.Green,Color.Yellow),
@@ -65,20 +63,5 @@ fun CustomCheckBox(modifier: Modifier = Modifier,
                 tint = if(isChecked) checkedMarkColor else unCheckedMarkColor,
                 contentDescription = "")
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CustomCheckBoxPreview(modifier: Modifier = Modifier) {
-    Habit_composeTheme {
-        CustomCheckBox(
-            onChange = {},
-            isChecked = true,
-            checkedBorderColor = Color.Black,
-            unCheckedBorderColor = Color.White,
-            checkedMarkColor = Color.Yellow,
-            unCheckedMarkColor = Color.Blue
-        )
     }
 }

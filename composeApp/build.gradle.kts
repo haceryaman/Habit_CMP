@@ -90,5 +90,9 @@ android {
         debugImplementation(compose.uiTooling)
     }
 }
+dependencies {
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.annotation.jvm)
+}
 
 

@@ -20,10 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import com.baitent.habit_compose.presentation.features.common.constants.Dimens
+import com.baitent.habit_compose.common.Dimens
 import com.baitent.habit_compose.presentation.common.views.custom.CustomCheckBox
-import com.baitent.habit_compose.presentation.theme.Habit_composeTheme
 import com.baitent.habit_compose.presentation.theme.LocalColors
 
 
@@ -79,7 +77,6 @@ fun MissionItem(
         )
 
         CustomCheckBox(
-            modifier = Modifier,
             onChange = {
                 isChecked = !isChecked
                 data.isChecked = isChecked
@@ -96,15 +93,5 @@ fun MissionItem(
 
         Spacer(modifier = Modifier.size(Dimens.padding4dp))
         Icon(imageVector = Icons.Default.MoreVert, contentDescription = "")
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HabitItemPreview(modifier: Modifier = Modifier) {
-    Habit_composeTheme {
-        MissionItemData(
-            id = "a21",title = "İngilizce Çalışş", isChecked = false
-        )
     }
 }

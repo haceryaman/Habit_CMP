@@ -2,14 +2,11 @@ package com.baitent.habit_compose.presentation.features.sign_up
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.baitent.habit_compose.delegate.MVI
-import com.baitent.habit_compose.delegate.mvi
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class SignUpViewModel : ViewModel(), MVI<SignUpContract.UiState, SignUpContract.UiAction, SignUpContract.UiEffect> by mvi(
+/*class SignUpViewModel : ViewModel(), MVI<SignUpContract.UiState, SignUpContract.UiAction, SignUpContract.UiEffect> by mvi(
     SignUpContract.UiState()
 ), KoinComponent {
 
@@ -89,4 +86,4 @@ class SignUpViewModel : ViewModel(), MVI<SignUpContract.UiState, SignUpContract.
                 state.confirmPassword.isNotBlank() &&
                 state.password == state.confirmPassword
     }
-}
+}*/

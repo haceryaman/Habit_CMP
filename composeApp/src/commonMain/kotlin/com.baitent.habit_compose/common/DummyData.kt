@@ -1,6 +1,6 @@
-package com.baitent.habit_compose.presentation.features.common
+package com.baitent.habit_compose.common
 
-import com.baitent.habit_compose.presentation.features.common.views.custom.CustomDropDownButtonData
+import com.baitent.habit_compose.presentation.common.views.custom.CustomDropDownButtonData
 import com.baitent.habit_compose.presentation.common.views.items.MissionItemData
 
 
