@@ -24,9 +24,16 @@ import com.baitent.habit_compose.presentation.common.views.custom.CustomButton
 import com.baitent.habit_compose.presentation.common.views.custom.CustomTextButton
 import com.baitent.habit_compose.presentation.theme.AppDimensions
 import com.baitent.habit_compose.presentation.theme.LocalColors
+import com.baitent.habit_compose.ui.main.MainContract.UiAction
+import com.baitent.habit_compose.ui.main.MainContract.UiEffect
+import com.baitent.habit_compose.ui.main.MainContract.UiState
+import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun SigninScreen(
+fun SignInScreen(
+    uiState: UiState,
+    uiEffect: Flow<UiEffect>,
+    onAction: (UiAction) -> Unit,
     onSignInClick: () -> Unit = {},
 ){
     Column(modifier = Modifier.fillMaxSize()) {

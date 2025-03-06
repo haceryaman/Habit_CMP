@@ -1,7 +1,5 @@
-package com.baitent.habit_compose.features.welcome
+package com.baitent.habit_compose.presentation.features.welcome
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,19 +11,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.text.style.TextAlign
 import com.baitent.habit_compose.common.AppStrings
 import com.baitent.habit_compose.presentation.common.views.custom.CustomButton
 import com.baitent.habit_compose.presentation.theme.AppDimensions
-import com.baitent.habit_compose.presentation.theme.LocalColors
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
+import com.baitent.habit_compose.ui.main.MainContract.UiAction
+import com.baitent.habit_compose.ui.main.MainContract.UiEffect
+import com.baitent.habit_compose.ui.main.MainContract.UiState
+import kotlinx.coroutines.flow.Flow
 
 
 @Composable
 fun WelcomeScreen(
-    viewModel: WelcomeViewModel,
+    uiState: UiState,
+    uiEffect: Flow<UiEffect>,
+    onAction: (UiAction) -> Unit,
     onSignUpClick: () -> Unit,
     onSignInClick: () -> Unit
 ) {
@@ -34,7 +34,7 @@ fun WelcomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-       // Image(painter = , contentDescription = "Welcome")
+        //Image(painter = , contentDescription = "Welcome")
         Spacer(modifier = Modifier.height(AppDimensions.xLargeSpace))
         Text(text = AppStrings.welcome, style = MaterialTheme.typography.displayLarge)
         Spacer(modifier = Modifier.height(AppDimensions.mediumSpace))
@@ -44,9 +44,9 @@ fun WelcomeScreen(
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.padding(AppDimensions.largeSpace))
-        //CustomButton(text = AppStrings.signUp), onClick = onSignUpClick)
+        CustomButton(text = AppStrings.signUp, onClick = onSignUpClick)
         Spacer(modifier = Modifier.padding(AppDimensions.mediumSpace))
-        //CustomButton(text = stringResource(R.string.signIn), onClick = onSignInClick)
+        CustomButton(text = AppStrings.signUp, onClick = onSignInClick)
 
     }
 }

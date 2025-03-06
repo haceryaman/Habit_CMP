@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.baitent.habit_compose.navigation.NavigationGraph
-import com.baitent.habit_compose.navigation.Screen.Main
+import com.baitent.habit_compose.navigation.Screen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -21,7 +21,7 @@ fun App() {
             NavigationGraph(
                 modifier = Modifier.padding(it),
                 navController = navController,
-                startDestination = Main
+                startDestination = Screen.Welcome
             )
         }
     }

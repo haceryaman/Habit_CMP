@@ -1,4 +1,4 @@
-package com.baitent.habit_compose.features.sign_in
+package com.baitent.habit_compose.presentation.features.sign_in
 
 data class SignInState(
     val email: String = "",

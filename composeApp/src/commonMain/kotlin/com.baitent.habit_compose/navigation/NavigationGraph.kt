@@ -11,9 +11,15 @@ import org.koin.compose.viewmodel.koinViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.baitent.habit_compose.presentation.features.welcome.WelcomeViewModel
 import com.baitent.habit_compose.ui.main.MainScreen
 import com.baitent.habit_compose.ui.main.MainViewModel
 import com.baitent.habit_compose.navigation.Screen.Main
+import com.baitent.habit_compose.presentation.features.sign_in.SignInScreen
+import com.baitent.habit_compose.presentation.features.sign_in.SignInViewModel
+import com.baitent.habit_compose.presentation.features.sign_up.SignUpScreen
+import com.baitent.habit_compose.presentation.features.sign_up.SignUpViewModel
+import com.baitent.habit_compose.presentation.features.welcome.WelcomeScreen
 
 private const val DURATION = 1000
 
@@ -43,6 +49,39 @@ fun NavigationGraph(
                 uiState = uiState,
                 uiEffect = uiEffect,
                 onAction = viewModel::onAction
+            )
+        }
+        composable<Screen.Welcome> {
+            val viewModel = koinViewModel<WelcomeViewModel>()
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            val uiEffect = viewModel.uiEffect
+            WelcomeScreen(
+                uiState = uiState,
+                uiEffect = uiEffect,
+                onAction = viewModel::onAction,
+                onSignUpClick = { navController.navigate(Screen.SignUp) },
+                onSignInClick = { navController.navigate(Screen.SingIn) }
+            )
+        }
+        composable<Screen.SignUp> {
+            val viewModel = koinViewModel<SignUpViewModel>()
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            val uiEffect = viewModel.uiEffect
+            SignUpScreen(
+                uiState = uiState,
+                uiEffect = uiEffect,
+                onAction = viewModel::onAction
+            )
+        }
+        composable<Screen.SingIn> {
+            val viewModel = koinViewModel<SignInViewModel>()
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            val uiEffect = viewModel.uiEffect
+            SignInScreen(
+                uiState = uiState,
+                uiEffect = uiEffect,
+                onAction = viewModel::onAction,
+                onSignInClick = { navController.navigate(Main) }
             )
         }
     }
