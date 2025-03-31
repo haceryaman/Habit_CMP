@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 import com.baitent.habit_compose.presentation.common.views.custom.CustomTextButton
 import com.baitent.habit_compose.presentation.theme.LocalColors
 
@@ -23,7 +25,7 @@ fun AuthLabel(
     Row(
         modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom
     ) {
-        Text(text = title, style = MaterialTheme.typography.bodyLarge)
+        Text(text = title, style = TextStyle(fontSize = 44.sp))
         Spacer(modifier = Modifier.weight(1f))
         CustomTextButton(
             text = textButtonTitle,

@@ -22,11 +22,7 @@ import com.baitent.habit_compose.ui.main.MainContract.UiState
 import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun SignUpScreen(
-    uiState: UiState,
-    uiEffect: Flow<UiEffect>,
-    onAction: (UiAction) -> Unit,
-) {
+fun SignUpScreen() {
 
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
@@ -74,7 +70,9 @@ fun SignUpScreen(
         Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
         CustomButton(
             text = AppStrings.signUp,
-            onClick = { }
+            onClick = {
+
+            }
         )
         CustomTextButton(
             text = AppStrings.signUp,

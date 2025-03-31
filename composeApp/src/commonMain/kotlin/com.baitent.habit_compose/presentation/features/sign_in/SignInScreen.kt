@@ -31,9 +31,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun SignInScreen(
-    uiState: UiState,
-    uiEffect: Flow<UiEffect>,
-    onAction: (UiAction) -> Unit,
     onSignInClick: () -> Unit = {},
 ){
     Column(modifier = Modifier.fillMaxSize()) {

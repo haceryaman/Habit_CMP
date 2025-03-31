@@ -46,7 +46,7 @@ fun WelcomeScreen(
         Spacer(modifier = Modifier.padding(AppDimensions.largeSpace))
         CustomButton(text = AppStrings.signUp, onClick = onSignUpClick)
         Spacer(modifier = Modifier.padding(AppDimensions.mediumSpace))
-        CustomButton(text = AppStrings.signUp, onClick = onSignInClick)
+        CustomButton(text = AppStrings.signIn, onClick = onSignInClick)
 
     }
 }
