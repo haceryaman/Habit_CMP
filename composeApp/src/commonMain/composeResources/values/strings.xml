@@ -16,6 +16,8 @@
     <string name="emailEmpty">Email cannot be empty</string>
     <string name="passwordEmpty">Password cannot be empty</string>
     <string name="passwordConfirmationEmpty">Password Confirmation cannot be empty</string>
+    <string name="seeAll">Tümünü Gör</string>
+
     <string name="signUpError">Sign Up Error</string>
     <string name="signInError">Sign In Error</string>
     <string name="signUpSuccess">Sign Up Success</string>
@@ -34,4 +36,6 @@
     <string name="name">Name</string>
     <string name="nameEmpty">Name cannot be empty</string>
     <string name="emailPlaceholder">example@example.com</string>
+    <string name="namePlaceholder">John Doe</string>
+    <string name="nameError">Name Cannot be empty</string>
 </resources>

@@ -11,11 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.baitent.habit_compose.common.AppStrings
 import com.baitent.habit_compose.common.Dimens
 import com.baitent.habit_compose.presentation.common.views.items.HeaderText
 import com.baitent.habit_compose.presentation.common.views.items.MissionItem
 import com.baitent.habit_compose.presentation.common.views.items.MissionItemData
+import habit_compose.composeapp.generated.resources.Res
+import habit_compose.composeapp.generated.resources.password
+import habit_compose.composeapp.generated.resources.seeAll
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun CardTodayHabitComponent(habits: List<MissionItemData>) {
@@ -32,8 +35,8 @@ fun CardTodayHabitComponent(habits: List<MissionItemData>) {
                 modifier = Modifier,
                 titleTextColor = Color.Black,
                 seeAllTextColor = Color.Cyan,
-                titleText = AppStrings.todayHabit,
-                seeAllText = AppStrings.seeAll
+                titleText = stringResource(Res.string.password),
+                seeAllText = stringResource(Res.string.seeAll),
             ) {
             }
 

@@ -93,6 +93,7 @@ android {
 dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.androidx.annotation.jvm)
+    implementation(libs.androidx.ui.android)
 }
 
 

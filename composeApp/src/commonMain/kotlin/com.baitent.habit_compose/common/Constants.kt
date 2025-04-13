@@ -1,6 +1,6 @@
 package com.baitent.habit_compose.common
 
-object AppStrings {
+/*object AppStrings {
     const val nameError = "Name cannot be empty"
     const val namePlaceholder = "Name"
     const val appName = "habit_compose"
@@ -38,4 +38,4 @@ object AppStrings {
     const val name = "Name"
     const val nameEmpty = "Name cannot be empty"
     const val emailPlaceholder = "example@example.com"
-}
+}*/

@@ -67,20 +67,13 @@ fun NavigationGraph(
             val viewModel = koinViewModel<SignUpViewModel>()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
-            SignUpScreen(
-                uiState = uiState,
-                uiEffect = uiEffect,
-                onAction = viewModel::onAction
-            )
+            SignUpScreen()
         }
         composable<Screen.SingIn> {
             val viewModel = koinViewModel<SignInViewModel>()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
             SignInScreen(
-                uiState = uiState,
-                uiEffect = uiEffect,
-                onAction = viewModel::onAction,
                 onSignInClick = { navController.navigate(Main) }
             )
         }

@@ -17,17 +17,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.baitent.habit_compose.common.AppStrings
 import com.baitent.habit_compose.presentation.common.views.items.TextFieldItem
 import com.baitent.habit_compose.presentation.common.views.items.AuthLabel
 import com.baitent.habit_compose.presentation.common.views.custom.CustomButton
 import com.baitent.habit_compose.presentation.common.views.custom.CustomTextButton
 import com.baitent.habit_compose.presentation.theme.AppDimensions
 import com.baitent.habit_compose.presentation.theme.LocalColors
-import com.baitent.habit_compose.ui.main.MainContract.UiAction
-import com.baitent.habit_compose.ui.main.MainContract.UiEffect
-import com.baitent.habit_compose.ui.main.MainContract.UiState
-import kotlinx.coroutines.flow.Flow
+import habit_compose.composeapp.generated.resources.Res
+import habit_compose.composeapp.generated.resources.email
+import habit_compose.composeapp.generated.resources.emailError
+import habit_compose.composeapp.generated.resources.emailPlaceholder
+import habit_compose.composeapp.generated.resources.forgotPassword
+import habit_compose.composeapp.generated.resources.orLoginWith
+import habit_compose.composeapp.generated.resources.password
+import habit_compose.composeapp.generated.resources.passwordError
+import habit_compose.composeapp.generated.resources.passwordPlaceholder
+import habit_compose.composeapp.generated.resources.rememberMe
+import habit_compose.composeapp.generated.resources.signIn
+import habit_compose.composeapp.generated.resources.signUp
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SignInScreen(
@@ -36,24 +44,24 @@ fun SignInScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
         AuthLabel(
-            title = AppStrings.signIn,
+            title = stringResource(Res.string.signIn),
             onClick = onSignInClick,
-            textButtonTitle= AppStrings.signUp
+            textButtonTitle = stringResource(Res.string.signUp)
         )
         Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
         TextFieldItem(
-            label = AppStrings.email,
-            placeholderId = AppStrings.emailPlaceholder,
-            errorMessageId = AppStrings.emailError,
+            label = stringResource(Res.string.email),
+            placeholderId = stringResource(Res.string.emailPlaceholder),
+            errorMessageId = stringResource(Res.string.emailError),
             isPassword = false,
             onValueChanged = {},
             value = ""
         )
         Spacer(modifier = Modifier.height(AppDimensions.mediumSpace))
         TextFieldItem(
-            label = AppStrings.password,
-            placeholderId = AppStrings.passwordPlaceholder,
-            errorMessageId = AppStrings.passwordError,
+            label = stringResource(Res.string.password),
+            placeholderId = stringResource(Res.string.passwordPlaceholder),
+            errorMessageId = stringResource(Res.string.passwordError),
             isPassword = false,
             onValueChanged = {},
             value = ""
@@ -77,14 +85,14 @@ fun SignInScreen(
                 )
                 Spacer(modifier = Modifier.width(AppDimensions.smallSpace))
                 Text(
-                    text = AppStrings.rememberMe,
+                    text = stringResource(Res.string.rememberMe),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
             }
 
             CustomTextButton(
-                text = AppStrings.forgotPassword,
+                text = stringResource(Res.string.forgotPassword),
                 onClick = {},
                 icon = Icons.AutoMirrored.Default.KeyboardArrowRight,
                 iconColor = LocalColors.current.white
@@ -92,15 +100,14 @@ fun SignInScreen(
         }
         Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
         CustomButton(
-            text = AppStrings.signIn,
+            text = stringResource(Res.string.signIn),
             onClick = {  }
         )
         CustomTextButton(
-            text = AppStrings.orLoginWith,
+            text = stringResource(Res.string.orLoginWith),
             onClick = {},
             icon = Icons.AutoMirrored.Default.KeyboardArrowRight,
             iconColor = LocalColors.current.white
         )
-
     }
 }
