@@ -21,7 +21,7 @@ fun App() {
             NavigationGraph(
                 modifier = Modifier.padding(it).padding(20.dp),
                 navController = navController,
-                startDestination = Screen.Welcome
+                startDestination = Screen.Main
             )
         }
     }

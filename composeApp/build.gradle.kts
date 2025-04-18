@@ -54,6 +54,8 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(libs.coil)
             implementation(compose.materialIconsExtended)
+            implementation(libs.kotlinx.datetime)
+
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
