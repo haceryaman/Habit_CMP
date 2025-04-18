@@ -1,5 +1,6 @@
 package com.baitent.habit_compose.presentation.features.sign_in
 
+import CustomButton
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.baitent.habit_compose.presentation.common.views.items.TextFieldItem
 import com.baitent.habit_compose.presentation.common.views.items.AuthLabel
-import com.baitent.habit_compose.presentation.common.views.custom.CustomButton
 import com.baitent.habit_compose.presentation.common.views.custom.CustomTextButton
 import com.baitent.habit_compose.presentation.theme.AppDimensions
 import com.baitent.habit_compose.presentation.theme.LocalColors
@@ -29,6 +30,7 @@ import habit_compose.composeapp.generated.resources.emailError
 import habit_compose.composeapp.generated.resources.emailPlaceholder
 import habit_compose.composeapp.generated.resources.forgotPassword
 import habit_compose.composeapp.generated.resources.orLoginWith
+import habit_compose.composeapp.generated.resources.orSignUpWith
 import habit_compose.composeapp.generated.resources.password
 import habit_compose.composeapp.generated.resources.passwordError
 import habit_compose.composeapp.generated.resources.passwordPlaceholder
@@ -39,13 +41,16 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SignInScreen(
-    onSignInClick: () -> Unit = {},
+    onSignUpClick: () -> Unit,
+    onSignInClick: () -> Unit,
+    onGoogleSignUpClick: () -> Unit,
+
 ){
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
         AuthLabel(
             title = stringResource(Res.string.signIn),
-            onClick = onSignInClick,
+            onClick = onSignUpClick,
             textButtonTitle = stringResource(Res.string.signUp)
         )
         Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
@@ -93,7 +98,7 @@ fun SignInScreen(
 
             CustomTextButton(
                 text = stringResource(Res.string.forgotPassword),
-                onClick = {},
+                onClick = onSignUpClick,
                 icon = Icons.AutoMirrored.Default.KeyboardArrowRight,
                 iconColor = LocalColors.current.white
             )
@@ -103,11 +108,20 @@ fun SignInScreen(
             text = stringResource(Res.string.signIn),
             onClick = {  }
         )
-        CustomTextButton(
-            text = stringResource(Res.string.orLoginWith),
-            onClick = {},
-            icon = Icons.AutoMirrored.Default.KeyboardArrowRight,
-            iconColor = LocalColors.current.white
+        Spacer(modifier = Modifier.weight(1f))
+
+        Text(
+            text = stringResource(Res.string.orSignUpWith),
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
+        Spacer(modifier = Modifier.height(AppDimensions.mediumSpace))
+
+        CustomButton(
+            text = null,
+            icon = Icons.Outlined.Settings,
+            onClick = onGoogleSignUpClick
+        )
+        Spacer(modifier = Modifier.weight(1f))
+
     }
 }

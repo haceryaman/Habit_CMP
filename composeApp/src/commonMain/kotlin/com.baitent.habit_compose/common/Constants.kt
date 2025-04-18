@@ -4,7 +4,6 @@ package com.baitent.habit_compose.common
     const val nameError = "Name cannot be empty"
     const val namePlaceholder = "Name"
     const val appName = "habit_compose"
-    const val seeAll = "See All"
     const val todayHabit = "Today Habit"
     const val habitItemText = "İngilizce Çalış"
     const val signUp = "Sign Up"

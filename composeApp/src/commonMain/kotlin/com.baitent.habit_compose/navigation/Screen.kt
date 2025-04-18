@@ -15,5 +15,4 @@ sealed interface Screen {
     @Serializable
     data object SingIn : Screen
 
-
 }

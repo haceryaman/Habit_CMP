@@ -53,6 +53,7 @@ kotlin {
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.navigation.compose)
             implementation(libs.coil)
+            implementation(compose.materialIconsExtended)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

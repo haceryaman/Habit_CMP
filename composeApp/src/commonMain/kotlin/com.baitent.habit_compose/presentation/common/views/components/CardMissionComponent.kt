@@ -17,7 +17,6 @@ import com.baitent.habit_compose.presentation.common.views.items.MissionItem
 import com.baitent.habit_compose.presentation.common.views.items.MissionItemData
 import habit_compose.composeapp.generated.resources.Res
 import habit_compose.composeapp.generated.resources.password
-import habit_compose.composeapp.generated.resources.seeAll
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -36,7 +35,7 @@ fun CardTodayHabitComponent(habits: List<MissionItemData>) {
                 titleTextColor = Color.Black,
                 seeAllTextColor = Color.Cyan,
                 titleText = stringResource(Res.string.password),
-                seeAllText = stringResource(Res.string.seeAll),
+                seeAllText = stringResource(Res.string.password),
             ) {
             }
 

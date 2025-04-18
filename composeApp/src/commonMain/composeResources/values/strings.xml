@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">habit_compose</string>
-    <string name="SeeAll">See All</string>
     <string name="TodayHabit">Today Habit</string>x
     <string name="habitItemText">İngilizce Çalış</string>x
     <string name="signUp">Sign Up</string>
@@ -16,7 +15,6 @@
     <string name="emailEmpty">Email cannot be empty</string>
     <string name="passwordEmpty">Password cannot be empty</string>
     <string name="passwordConfirmationEmpty">Password Confirmation cannot be empty</string>
-    <string name="seeAll">Tümünü Gör</string>
 
     <string name="signUpError">Sign Up Error</string>
     <string name="signInError">Sign In Error</string>

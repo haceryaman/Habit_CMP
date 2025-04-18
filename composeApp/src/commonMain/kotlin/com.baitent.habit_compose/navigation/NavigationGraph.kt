@@ -56,9 +56,6 @@ fun NavigationGraph(
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
             WelcomeScreen(
-                uiState = uiState,
-                uiEffect = uiEffect,
-                onAction = viewModel::onAction,
                 onSignUpClick = { navController.navigate(Screen.SignUp) },
                 onSignInClick = { navController.navigate(Screen.SingIn) }
             )
@@ -67,14 +64,20 @@ fun NavigationGraph(
             val viewModel = koinViewModel<SignUpViewModel>()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
-            SignUpScreen()
+            SignUpScreen(
+                onSignUpClick = { navController.navigate(Screen.Main) },
+                onSignInClick = { navController.navigate(Screen.SingIn) },
+                onGoogleSignInClick = { navController.navigate(Screen.Main) },
+            )
         }
         composable<Screen.SingIn> {
             val viewModel = koinViewModel<SignInViewModel>()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
             SignInScreen(
-                onSignInClick = { navController.navigate(Main) }
+                onSignUpClick = { navController.navigate(Screen.Main) },
+                onSignInClick = { navController.navigate(Screen.SingIn) },
+                onGoogleSignUpClick = { navController.navigate(Screen.Main) },
             )
         }
     }
