@@ -1,5 +1,6 @@
 package com.baitent.habit_compose.navigation
 
+import MainScreen
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -12,7 +13,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.baitent.habit_compose.presentation.features.welcome.WelcomeViewModel
-import com.baitent.habit_compose.ui.main.MainScreen
 import com.baitent.habit_compose.ui.main.MainViewModel
 import com.baitent.habit_compose.navigation.Screen.Main
 import com.baitent.habit_compose.presentation.features.sign_in.SignInScreen
@@ -45,11 +45,7 @@ fun NavigationGraph(
             val viewModel = koinViewModel<MainViewModel>()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val uiEffect = viewModel.uiEffect
-            MainScreen(
-                uiState = uiState,
-                uiEffect = uiEffect,
-                onAction = viewModel::onAction
-            )
+            MainScreen()
         }
         composable<Screen.Welcome> {
             val viewModel = koinViewModel<WelcomeViewModel>()

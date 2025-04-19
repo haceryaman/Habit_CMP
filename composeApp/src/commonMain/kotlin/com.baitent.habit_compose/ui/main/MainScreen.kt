@@ -1,45 +1,19 @@
-package com.baitent.habit_compose.ui.main
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.baitent.habit_compose.common.collectWithLifecycle
-import com.baitent.habit_compose.ui.components.EmptyScreen
-import com.baitent.habit_compose.ui.components.LoadingBar
-import com.baitent.habit_compose.ui.main.MainContract.UiAction
-import com.baitent.habit_compose.ui.main.MainContract.UiEffect
-import com.baitent.habit_compose.ui.main.MainContract.UiState
-import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import com.baitent.habit_compose.common.helpers.DateFormatterHelper
+import com.baitent.habit_compose.common.helpers.GradientText
+import com.baitent.habit_compose.presentation.common.views.components.HabitProgressCard
 
 @Composable
-fun MainScreen(
-    uiState: UiState,
-    uiEffect: Flow<UiEffect>,
-    onAction: (UiAction) -> Unit,
-) {
-    // Side‑effect’leri topla
-    uiEffect.collectWithLifecycle { effect ->
-        // …
-    }
-
-    when {
-        uiState.isLoading -> LoadingBar()
-        uiState.list.isNotEmpty() -> EmptyScreen()
-        else -> MainContent()
-    }
-}
-
-@Composable
-fun MainContent() {
-    val todayText = remember { getTodayFormattedDate() }
+fun MainScreen() {
+    val todayText = remember { DateFormatterHelper.getTodayFormattedDate() }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -49,24 +23,20 @@ fun MainContent() {
             text = todayText,
             fontSize = 24.sp
         )
+        Text(
+            text = buildAnnotatedString {
+                append("Hello, ")
+                withStyle(GradientText.spanStyle()) {
+                    append("User!")
+                }
+            }
+        )
+        HabitProgressCard(
+            progress = 0.7f,
+            completed = 3,
+            total = 5,
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
+
     }
-}
-
-fun getTodayFormattedDate(): String {
-    val today = Clock.System
-        .now()
-        .toLocalDateTime(TimeZone.currentSystemDefault())
-        .date
-
-    val weekday = today.dayOfWeek
-        .name
-        .lowercase()
-        .replaceFirstChar { it.uppercase() }
-
-    val month = today.month
-        .name
-        .lowercase()
-        .replaceFirstChar { it.uppercase() }
-
-    return "$weekday, ${today.dayOfMonth} $month ${today.year}"
 }
