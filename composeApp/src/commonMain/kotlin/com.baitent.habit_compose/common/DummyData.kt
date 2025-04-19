@@ -1,17 +1,17 @@
 package com.baitent.habit_compose.common
 
 import com.baitent.habit_compose.presentation.common.views.custom.CustomDropDownButtonData
-import com.baitent.habit_compose.presentation.common.views.items.MissionItemData
+import com.baitent.habit_compose.presentation.common.views.items.HabitItemData
 
 
 class DummyData {
     companion object {
-        fun getHabits():List<MissionItemData>{
+        fun getHabits():List<HabitItemData>{
                 return listOf(
-                    MissionItemData(id = "a1",title = "Egzersiz yap", isChecked = true),
-                    MissionItemData(id = "a2",title = "Kitap oku", isChecked = false),
-                    MissionItemData(id = "a3",title = "Gökhan abinin videoları izle", isChecked = true),
-                    MissionItemData(id = "a4",title = "Meditasyon yap", isChecked = true),
+                    HabitItemData(id = "a1",title = "Egzersiz yap", isChecked = true),
+                    HabitItemData(id = "a2",title = "Kitap oku", isChecked = false),
+                    HabitItemData(id = "a3",title = "Gökhan abinin videoları izle", isChecked = true),
+                    HabitItemData(id = "a4",title = "Meditasyon yap", isChecked = true),
                 )
         }
 

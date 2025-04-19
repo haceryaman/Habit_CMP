@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">habit_compose</string>
-    <string name="TodayHabit">Today Habit</string>x
-    <string name="habitItemText">İngilizce Çalış</string>x
+    <string name="TodayHabit">Today Habit</string>
+    <string name="showAll">Show All</string>
+    <string name="habitItemText">İngilizce Çalış</string>
     <string name="signUp">Sign Up</string>
     <string name="signIn">Sign In</string>
     <string name="email">Email</string>

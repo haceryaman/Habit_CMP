@@ -10,13 +10,13 @@ import androidx.compose.ui.unit.sp
 object GradientText {
     private val DefaultBrush: Brush = Brush.horizontalGradient(
         colors = listOf(
-            Color(0xFFEE7752),
-            Color(0xFF23A6D5)
+            Color(0xFFFFA450),
+            Color(0xFFFF5C00)
         )
     )
 
     fun spanStyle(
-        fontSize: TextUnit = 16.sp,
+        fontSize: TextUnit = 28.sp,
         fontWeight: FontWeight = FontWeight.Bold,
         brush: Brush = DefaultBrush
     ): SpanStyle = SpanStyle(

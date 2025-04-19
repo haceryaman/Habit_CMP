@@ -13,36 +13,40 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.baitent.habit_compose.common.Dimens
 import com.baitent.habit_compose.presentation.common.views.items.HeaderText
-import com.baitent.habit_compose.presentation.common.views.items.MissionItem
-import com.baitent.habit_compose.presentation.common.views.items.MissionItemData
+import com.baitent.habit_compose.presentation.common.views.items.HabitItem
+import com.baitent.habit_compose.presentation.common.views.items.HabitItemData
+import com.baitent.habit_compose.presentation.theme.LocalColors
 import habit_compose.composeapp.generated.resources.Res
-import habit_compose.composeapp.generated.resources.password
+import habit_compose.composeapp.generated.resources.TodayHabit
+import habit_compose.composeapp.generated.resources.showAll
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun CardTodayHabitComponent(habits: List<MissionItemData>) {
+fun CardTodayHabitComponent(habits: List<HabitItemData>) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors().copy(
             containerColor = Color.White
         )
     ) {
+        val colors = LocalColors.current
+
         Column(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.padding16dp)) {
             Spacer(modifier = Modifier.size(22.dp))
 
             HeaderText(
                 modifier = Modifier,
                 titleTextColor = Color.Black,
-                seeAllTextColor = Color.Cyan,
-                titleText = stringResource(Res.string.password),
-                seeAllText = stringResource(Res.string.password),
+                seeAllTextColor = colors.primary,
+                titleText = stringResource(Res.string.TodayHabit),
+                seeAllText = stringResource(Res.string.showAll),
             ) {
             }
 
             Spacer(modifier = Modifier.size(Dimens.padding16dp))
 
             habits.forEachIndexed { _, habitItem ->
-                MissionItem(
+                HabitItem(
                     data = habitItem
                 ) {
                 }

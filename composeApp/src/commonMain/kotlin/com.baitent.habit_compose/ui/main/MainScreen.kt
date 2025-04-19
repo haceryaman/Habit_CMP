@@ -1,22 +1,27 @@
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.baitent.habit_compose.common.helpers.DateFormatterHelper
 import com.baitent.habit_compose.common.helpers.GradientText
+import com.baitent.habit_compose.presentation.common.views.components.CardTodayHabitComponent
 import com.baitent.habit_compose.presentation.common.views.components.HabitProgressCard
+import com.baitent.habit_compose.presentation.common.views.items.HabitItemData
 
 @Composable
 fun MainScreen() {
     val todayText = remember { DateFormatterHelper.getTodayFormattedDate() }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(color = Color.Gray),
         verticalArrangement = Arrangement.Top
     ) {
         Text(
@@ -25,8 +30,14 @@ fun MainScreen() {
         )
         Text(
             text = buildAnnotatedString {
-                append("Hello, ")
-                withStyle(GradientText.spanStyle()) {
+                withStyle(
+                    SpanStyle(fontSize = 28.sp)
+                ) {
+                    append("Hello, ")
+                }
+                withStyle(
+                    GradientText.spanStyle(fontSize = 28.sp)
+                ) {
                     append("User!")
                 }
             }
@@ -36,6 +47,9 @@ fun MainScreen() {
             completed = 3,
             total = 5,
             modifier = Modifier.padding(vertical = 8.dp)
+        )
+        CardTodayHabitComponent(
+            habits = listOf(HabitItemData(id = "1", title = "jadha", isChecked = false,), HabitItemData(id = "2", title = "jaeefefdha", isChecked = true,))
         )
 
     }

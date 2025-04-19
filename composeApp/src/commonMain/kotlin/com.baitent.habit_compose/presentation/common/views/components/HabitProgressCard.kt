@@ -28,8 +28,8 @@ import org.jetbrains.compose.resources.painterResource
 
 private val HabitCardGradient = Brush.linearGradient(
     colors = listOf(
-        Color(0xFFFFB74D),
-        Color(0xFFFF8A65)
+        Color(0xFFFFA450),
+        Color(0xFFFF5C00)
     )
 )
 
