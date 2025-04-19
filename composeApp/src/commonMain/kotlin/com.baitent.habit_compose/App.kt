@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.baitent.habit_compose.navigation.NavigationGraph
 import com.baitent.habit_compose.navigation.Screen
+import com.baitent.habit_compose.presentation.theme.LocalColors
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -16,7 +17,7 @@ fun App() {
     val navController = rememberNavController()
     MaterialTheme {
         Scaffold(
-            containerColor = MaterialTheme.colorScheme.onPrimary
+            containerColor = LocalColors.current.background,
         ) {
             NavigationGraph(
                 modifier = Modifier.padding(it).padding(20.dp),

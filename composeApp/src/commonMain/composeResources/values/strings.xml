@@ -37,4 +37,7 @@
     <string name="emailPlaceholder">example@example.com</string>
     <string name="namePlaceholder">John Doe</string>
     <string name="nameError">Name Cannot be empty</string>
+
+    <string name="yourGoals">Your Goals</string>
+
 </resources>

@@ -90,7 +90,7 @@ fun lightColors(
     primaryVariant: Color = Color(0xFFF7EDE2),
     secondary: Color = Color(0xFFF5CAC3),
     secondaryVariant: Color = Color(0xFF84A59D),
-    background: Color = Color(0xFFFFFFFF),
+    background: Color = Color(0xFFFBFBFB),
     surface: Color = Color(0xFFF7EDE2),
     tertiary: Color = Color(0xFFF28482),
     onPrimary: Color = Color.Black,

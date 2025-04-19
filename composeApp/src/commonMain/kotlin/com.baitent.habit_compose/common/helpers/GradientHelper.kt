@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
 object GradientText {
-    private val DefaultBrush: Brush = Brush.horizontalGradient(
+    val DefaultBrush: Brush = Brush.horizontalGradient(
         colors = listOf(
             Color(0xFFFFA450),
             Color(0xFFFF5C00)

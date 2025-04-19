@@ -57,8 +57,7 @@ fun HabitItem(
         Text(
             text       = data.title,
             color      = textColor,
-            fontSize   = Dimens.textSize12sp,
-            fontWeight = FontWeight.SemiBold,
+            fontSize   = Dimens.textSize16sp,
             modifier   = Modifier.weight(1f)
         )
 
