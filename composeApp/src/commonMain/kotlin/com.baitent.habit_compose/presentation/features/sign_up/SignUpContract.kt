@@ -58,5 +58,6 @@ object SignUpContract {
         data object NavigateBack : UiEffect()
         data object NavigateLogin : UiEffect()
         data object NavigateGoogleLogin : UiEffect()
+        data object NavigateSignUp: UiEffect()
     }
 }

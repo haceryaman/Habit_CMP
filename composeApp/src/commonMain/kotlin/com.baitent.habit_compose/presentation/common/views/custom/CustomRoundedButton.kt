@@ -22,7 +22,8 @@ fun CustomButton(
     icon: ImageVector? = null,
     modifier: Modifier = Modifier,
     color: Color = LocalColors.current.primary,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    loading: Boolean=false,
 ) {
     Button(
         onClick = onClick,

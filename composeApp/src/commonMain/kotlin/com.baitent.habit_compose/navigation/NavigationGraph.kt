@@ -4,6 +4,7 @@ import MainScreen
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -11,11 +12,13 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -33,15 +36,16 @@ import com.baitent.habit_compose.presentation.features.sign_in.SignInViewModel
 import com.baitent.habit_compose.presentation.features.sign_up.SignUpScreen
 import com.baitent.habit_compose.presentation.features.sign_up.SignUpViewModel
 import com.baitent.habit_compose.presentation.features.welcome.WelcomeScreen
+import com.baitent.habit_compose.presentation.theme.LocalColors
 
 sealed class BottomNavItem(
     val screen: Screen,
     val icon: ImageVector,
     val label: String
 ) {
-     object Home    : BottomNavItem(Screen.Main,   Icons.Default.Home,   "Ana Sayfa")
-     object Search  : BottomNavItem(Screen.Welcome, Icons.Default.Search, "Ara")
-     object Profile : BottomNavItem(Screen.SignUp,  Icons.Default.Person, "Profil")
+    object Home : BottomNavItem(Main, Icons.Default.Home, "Ana Sayfa")
+    object Search : BottomNavItem(Screen.Welcome, Icons.Default.Search, "Ara")
+    object Profile : BottomNavItem(Screen.SignUp, Icons.Default.Person, "Profil")
 }
 
 private val bottomNavItems = listOf(
@@ -55,7 +59,7 @@ private const val DURATION = 1000
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
-    startDestination: Screen,
+    startDestination: Screen.Welcome,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -64,9 +68,21 @@ fun NavigationGraph(
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentDestination = navBackStackEntry?.destination
             NavigationBar {
+                Modifier.background(color = Color.White)
                 bottomNavItems.forEach { item ->
                     NavigationBarItem(
-                        icon = { Icon(item.icon, contentDescription = item.label) },
+                        icon = {
+                            Icon(
+                                imageVector = item.icon,
+                                contentDescription = item.label,
+                            )
+                        },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = LocalColors.current.primary,
+                            unselectedIconColor = Color.Gray,
+                            selectedTextColor = LocalColors.current.primary,
+                            unselectedTextColor = Color.Gray
+                        ),
                         label = { Text(item.label) },
                         selected = currentDestination?.hierarchy
                             ?.any { it.route == item.screen.route } == true,
@@ -116,9 +132,10 @@ fun NavigationGraph(
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 val uiEffect = viewModel.uiEffect
                 SignUpScreen(
-                    onSignUpClick = { navController.navigate(Screen.Main) },
-                    onSignInClick = { navController.navigate(Screen.SingIn) },
-                    onGoogleSignInClick = { navController.navigate(Screen.Main) },
+                    onSignUp = { navController.navigate(Main) },
+                    onSignIn = { navController.navigate(Screen.SingIn) },
+                    onGoogleSignIn = { navController.navigate(Main) },
+                    onBack = { }
                 )
             }
             composable<Screen.SingIn> {
@@ -126,9 +143,11 @@ fun NavigationGraph(
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
                 val uiEffect = viewModel.uiEffect
                 SignInScreen(
-                    onSignUpClick = { navController.navigate(Screen.Main) },
-                    onSignInClick = { navController.navigate(Screen.SingIn) },
-                    onGoogleSignUpClick = { navController.navigate(Screen.Main) },
+                    onSignUp = { navController.navigate(Main) },
+                    onSignIn = { navController.navigate(Screen.SingIn) },
+                    onGoogleSignIn = { navController.navigate(Main) },
+                    onBack = {},
+                    onNavigateHome = { navController.navigate(Main) },
                 )
             }
         }

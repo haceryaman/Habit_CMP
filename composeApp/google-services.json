@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "118195362072",
+    "project_id": "habit-cmp",
+    "storage_bucket": "habit-cmp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118195362072:android:0311f669b112b650eea66d",
+        "android_client_info": {
+          "package_name": "com.baitent.habit_compose"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUwhDuVO094hnaBxK99MW07-mSc5BC3Fg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

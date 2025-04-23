@@ -5,11 +5,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import com.baitent.habit_compose.presentation.common.views.items.TextFieldItem
 import com.baitent.habit_compose.presentation.common.views.items.AuthLabel
@@ -30,82 +30,122 @@ import habit_compose.composeapp.generated.resources.passwordPlaceholder
 import habit_compose.composeapp.generated.resources.signIn
 import habit_compose.composeapp.generated.resources.signUp
 import org.jetbrains.compose.resources.stringResource
+import androidx.compose.runtime.*
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpScreen(
-    onSignUpClick: () -> Unit,
-    onSignInClick: () -> Unit,
-    onGoogleSignInClick: () -> Unit,
+    viewModel: SignUpViewModel = viewModel(),
+    onSignIn: () -> Unit,
+    onGoogleSignIn: () -> Unit,
+    onSignUp: () -> Unit,
+    onBack: () -> Unit
 ) {
+    val state by viewModel.uiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
+    LaunchedEffect(viewModel.uiEffect) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                SignUpContract.UiEffect.NavigateLogin -> onSignIn()
+                SignUpContract.UiEffect.NavigateGoogleLogin -> onGoogleSignIn()
+                SignUpContract.UiEffect.NavigateBack -> onBack()
+                SignUpContract.UiEffect.NavigateSignUp -> onSignUp()
+            }
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(AppDimensions.mediumSpace)
+    ) {
         AuthLabel(
             title = stringResource(Res.string.signUp),
-            onClick = {
-                onSignInClick()
-            },
+            onClick = onBack,
             textButtonTitle = stringResource(Res.string.signIn)
         )
-        Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
+        Spacer(Modifier.height(AppDimensions.xxxLargeSpace))
+
         TextFieldItem(
             label = stringResource(Res.string.name),
+            value = state.username,
+            onValueChanged = { new ->
+                coroutineScope.launch {
+                    viewModel.onAction(SignUpContract.UiAction.OnUserNameChange(new))
+                }
+            },
             placeholderId = stringResource(Res.string.namePlaceholder),
             errorMessageId = stringResource(Res.string.nameError),
-            isPassword = false,
-            onValueChanged = { },
-            value = ""
+            isPassword = false
         )
-        Spacer(modifier = Modifier.height(AppDimensions.mediumSpace))
+        Spacer(Modifier.height(AppDimensions.mediumSpace))
         TextFieldItem(
             label = stringResource(Res.string.email),
+            value = state.email,
+            onValueChanged = { new ->
+                coroutineScope.launch {
+                    viewModel.onAction(SignUpContract.UiAction.OnEmailChange(new))
+                }
+            },
             placeholderId = stringResource(Res.string.emailPlaceholder),
             errorMessageId = stringResource(Res.string.emailError),
-            isPassword = false,
-            onValueChanged = { },
-            value = ""
+            isPassword = false
         )
-        Spacer(modifier = Modifier.height(AppDimensions.mediumSpace))
+        Spacer(Modifier.height(AppDimensions.mediumSpace))
         TextFieldItem(
             label = stringResource(Res.string.password),
+            value = state.password,
+            isPassword = true,
+            onValueChanged = { new ->
+                coroutineScope.launch {
+                    viewModel.onAction(SignUpContract.UiAction.OnPasswordChange(new))
+                }
+            },
             placeholderId = stringResource(Res.string.passwordPlaceholder),
-            errorMessageId = stringResource(Res.string.passwordError),
-            isPassword = false,
-            onValueChanged = { },
-            value = ""
+            errorMessageId = stringResource(Res.string.passwordError)
         )
-        Spacer(modifier = Modifier.height(AppDimensions.mediumSpace))
+        Spacer(Modifier.height(AppDimensions.mediumSpace))
         TextFieldItem(
             label = stringResource(Res.string.passwordConfirmation),
+            value = state.confirmPassword,
+            isPassword = true,
+            onValueChanged = { new ->
+                coroutineScope.launch {
+                    viewModel.onAction(SignUpContract.UiAction.OnConfirmPasswordChange(new))
+                }
+            },
             placeholderId = stringResource(Res.string.passwordPlaceholder),
-            errorMessageId = stringResource(Res.string.passwordConfirmationError),
-            isPassword = false,
-            onValueChanged = { },
-            value = ""
+            errorMessageId = stringResource(Res.string.passwordConfirmationError)
         )
-        Spacer(modifier = Modifier.height(AppDimensions.xxxLargeSpace))
+        Spacer(Modifier.height(AppDimensions.xxxLargeSpace))
+
         CustomButton(
             text = stringResource(Res.string.signUp),
             onClick = {
-                onSignUpClick()
-            }
+                coroutineScope.launch {
+                    viewModel.onAction(SignUpContract.UiAction.OnSignUpClick)
+                }
+            },
+            enabled = state.isButtonEnable,
+            loading = state.isLoading
         )
         Spacer(modifier = Modifier.weight(1f))
 
-        Text(
-            text = stringResource(Res.string.orSignUpWith),
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
-        Spacer(modifier = Modifier.height(AppDimensions.mediumSpace))
+        state.errorMessage?.let {
+        }
+
+        Spacer(Modifier.weight(1f))
 
         CustomButton(
-            text = null,
+            text = stringResource(Res.string.orSignUpWith),
             icon = Icons.Outlined.Settings,
             onClick = {
-                onGoogleSignInClick()
+                coroutineScope.launch {
+                    viewModel.onAction(SignUpContract.UiAction.OnGoogleSignInClick)
+                }
             }
         )
-        Spacer(modifier = Modifier.weight(1f))
-
     }
 }

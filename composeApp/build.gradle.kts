@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -8,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinxSerialization)
+    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -35,6 +35,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
+            implementation(project.dependencies.platform(libs.firebase.bom))
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -55,7 +56,8 @@ kotlin {
             implementation(libs.coil)
             implementation(compose.materialIconsExtended)
             implementation(libs.kotlinx.datetime)
-
+            implementation(libs.gitlive.firebase.firestore)
+            implementation(libs.gitlive.firebase.auth)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -95,9 +97,4 @@ android {
 }
 dependencies {
     implementation(libs.firebase.auth.ktx)
-    implementation(libs.androidx.annotation.jvm)
-    implementation(libs.androidx.ui.android)
-    implementation(libs.androidx.foundation.android)
 }
-
-

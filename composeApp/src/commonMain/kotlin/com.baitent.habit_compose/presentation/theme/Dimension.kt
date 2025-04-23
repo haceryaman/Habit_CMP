@@ -32,5 +32,5 @@ object AppDimensions {
     val cornerRadius: Dp = 12.dp
 
     val textFieldRadius: Dp = 8.dp
-    val textFieldHeight:Dp = 48.dp      //button height ile aynı olmalı
+    val textFieldHeight:Dp = 58.dp      //button height ile aynı olmalı
 }

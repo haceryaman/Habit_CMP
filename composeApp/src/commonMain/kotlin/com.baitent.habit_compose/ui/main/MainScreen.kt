@@ -50,11 +50,17 @@ fun MainScreen() {
             modifier = Modifier.padding(vertical = 8.dp)
         )
         CardTodayHabitComponent(
-            habits = listOf(HabitItemData(id = "1", title = "jadha", isChecked = false,), HabitItemData(id = "2", title = "jaeefefdha", isChecked = true,))
+            habits = listOf(
+                HabitItemData(id = "1", title = "jadha", isChecked = false),
+                HabitItemData(id = "2", title = "jaeefefdha", isChecked = true)
+            )
         )
 
         YourGoalsComponent(
-            allGoals = listOf(HabitItemData(id = "1", title = "", isChecked = false,), HabitItemData(id = "2", title = "", isChecked = true,))
+            allGoals = listOf(
+                HabitItemData(id = "1", title = "", isChecked = false),
+                HabitItemData(id = "2", title = "", isChecked = true)
+            )
         )
 
     }
