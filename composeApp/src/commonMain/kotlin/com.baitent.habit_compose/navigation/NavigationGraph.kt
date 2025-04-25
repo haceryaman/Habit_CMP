@@ -18,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -41,6 +42,7 @@ import com.baitent.habit_compose.navigation.Screen.Main
 import com.baitent.habit_compose.navigation.Screen.Welcome
 import com.baitent.habit_compose.navigation.Screen.SignUp
 import com.baitent.habit_compose.navigation.Screen.SingIn
+import kotlinx.coroutines.launch
 
 sealed class BottomNavItem(
     val screen: Screen,
@@ -141,11 +143,21 @@ fun NavigationGraph(
                 val vm = koinViewModel<SignUpViewModel>()
                 val state by vm.uiState.collectAsStateWithLifecycle()
                 val effect = vm.uiEffect
+                val coroutineScope = rememberCoroutineScope()
+
                 SignUpScreen(
                     onSignUp = { navController.navigate(Main) },
                     onSignIn = { navController.navigate(SingIn) },
-                    onGoogleSignIn = { navController.navigate(Main) },
-                    onBack = { navController.popBackStack() }
+                    onGoogleSignUp = { navController.navigate(Main) },
+                    onBack = { navController.popBackStack() },
+                    state = state,
+                    uiEffect = effect,
+                    viewModel = vm,
+                    onAction ={ action ->
+                        coroutineScope.launch {
+                            vm.onAction(action)
+                        }
+                    }
                 )
             }
             composable<SingIn> {

@@ -16,7 +16,7 @@ fun TextFieldItem(
     placeholderId: String,
     errorMessageId: String,
     isPassword: Boolean,
-    isError: Boolean= false,
+    isError: Boolean = false,
     onValueChanged: (String) -> Unit,
     value: String,
 

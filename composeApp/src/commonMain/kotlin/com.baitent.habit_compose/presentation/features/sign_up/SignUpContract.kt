@@ -17,18 +17,6 @@ object SignUpContract {
         //    val dialogState: DialogState? = null,
         val isButtonEnable: Boolean = false,
     )
-    {
-        /*  fun setSuccessDialog(message: String?): UiState {
-              return copy(dialogState = DialogState(isSuccess = true, message = message), isLoading = false)
-          }
-          fun setErrorDialog(message: String?): UiState {
-              return copy(dialogState = DialogState(isSuccess = false, message = message), isLoading = false)
-          }
-
-          fun checkButtonEnabled() = email.isNotEmpty() && username.isNotEmpty() &&
-                  password.isNotEmpty() && passwordAgain.isNotEmpty()
-                  */
-    }
 
     /**
      * UiAction, ekran üzerindeki kullanıcı etkileşimlerini veya arka planda tetiklenen olayları temsil eder.

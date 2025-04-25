@@ -33,8 +33,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun SignInScreen(
     onSignUp: () -> Unit,
-    onSignIn: ()-> Unit,
-    onBack: ()-> Unit,
+    onSignIn: () -> Unit,
+    onBack: () -> Unit,
     onNavigateHome: () -> Unit,
     onGoogleSignIn: () -> Unit
 ) {
@@ -69,7 +69,15 @@ fun SignInScreen(
             placeholderId = stringResource(Res.string.emailPlaceholder),
             errorMessageId = stringResource(Res.string.passwordError),
             isPassword = false,
-            onValueChanged = { scope.launch { viewModel.onAction(SignInContract.UiAction.OnEmailChanged(it)) } }
+            onValueChanged = {
+                scope.launch {
+                    viewModel.onAction(
+                        SignInContract.UiAction.OnEmailChanged(
+                            it
+                        )
+                    )
+                }
+            }
         )
         Spacer(Modifier.height(AppDimensions.mediumSpace))
         TextFieldItem(
@@ -78,18 +86,23 @@ fun SignInScreen(
             placeholderId = stringResource(Res.string.passwordPlaceholder),
             errorMessageId = stringResource(Res.string.passwordError),
             isPassword = true,
-            onValueChanged = { scope.launch { viewModel.onAction(SignInContract.UiAction.OnPasswordChanged(it)) } }
+            onValueChanged = {
+                scope.launch {
+                    viewModel.onAction(
+                        SignInContract.UiAction.OnPasswordChanged(
+                            it
+                        )
+                    )
+                }
+            }
         )
         Spacer(Modifier.height(AppDimensions.mediumSpace))
         CustomButton(
             text = stringResource(Res.string.signIn),
-            onClick = { scope.launch { viewModel.onAction(SignInContract.UiAction.OnSignInClick) } },
+            onClick = onSignIn,
             enabled = state.isButtonEnable,
             loading = state.isLoading
         )
-        state.errorMessage?.let { msg ->
-            //ErrorDialog(message = msg) { scope.launch { viewModel.onAction(SignInContract.UiAction.OnDialogDismiss) } }
-        }
         Spacer(Modifier.weight(1f))
         Text(
             text = stringResource(Res.string.orLoginWith),
@@ -99,7 +112,7 @@ fun SignInScreen(
         CustomButton(
             text = null,
             icon = Icons.Outlined.Settings,
-            onClick = { scope.launch { viewModel.onAction(SignInContract.UiAction.OnGoogleSignInClick) } }
+            onClick = onGoogleSignIn
         )
         Spacer(Modifier.weight(1f))
     }

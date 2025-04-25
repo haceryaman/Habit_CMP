@@ -39,7 +39,7 @@ class SignUpViewModel : ViewModel(),
         try {
             auth.createUserWithEmailAndPassword(uiState.value.email, uiState.value.password)
             updateUiState { copy(isLoading = false, isSuccess = true) }
-            emitUiEffect(SignUpContract.UiEffect.NavigateLogin)
+            emitUiEffect(SignUpContract.UiEffect.NavigateSignUp)
         } catch (e: Exception) {
             updateUiState { copy(isLoading = false, errorMessage = e.message) }
         }
