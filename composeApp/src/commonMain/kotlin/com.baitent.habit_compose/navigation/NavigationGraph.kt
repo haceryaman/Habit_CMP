@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -23,29 +24,32 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import org.koin.compose.viewmodel.koinViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.baitent.habit_compose.presentation.features.welcome.WelcomeViewModel
-import com.baitent.habit_compose.ui.main.MainViewModel
-import com.baitent.habit_compose.navigation.Screen.Main
 import com.baitent.habit_compose.presentation.features.sign_in.SignInScreen
 import com.baitent.habit_compose.presentation.features.sign_in.SignInViewModel
 import com.baitent.habit_compose.presentation.features.sign_up.SignUpScreen
 import com.baitent.habit_compose.presentation.features.sign_up.SignUpViewModel
 import com.baitent.habit_compose.presentation.features.welcome.WelcomeScreen
+import com.baitent.habit_compose.presentation.features.welcome.WelcomeViewModel
+import com.baitent.habit_compose.ui.main.MainViewModel
 import com.baitent.habit_compose.presentation.theme.LocalColors
+import org.koin.compose.viewmodel.koinViewModel
+import com.baitent.habit_compose.navigation.Screen.Main
+import com.baitent.habit_compose.navigation.Screen.Welcome
+import com.baitent.habit_compose.navigation.Screen.SignUp
+import com.baitent.habit_compose.navigation.Screen.SingIn
 
 sealed class BottomNavItem(
     val screen: Screen,
     val icon: ImageVector,
     val label: String
 ) {
-    object Home : BottomNavItem(Main, Icons.Default.Home, "Ana Sayfa")
-    object Search : BottomNavItem(Screen.Welcome, Icons.Default.Search, "Ara")
-    object Profile : BottomNavItem(Screen.SignUp, Icons.Default.Person, "Profil")
+    data object Home : BottomNavItem(Main, Icons.Default.Home, "Ana Sayfa")
+    data object Search : BottomNavItem(Welcome, Icons.Default.Search, "Ara")
+    data object Profile : BottomNavItem(SignUp, Icons.Default.Person, "Profil")
 }
 
 private val bottomNavItems = listOf(
@@ -59,95 +63,101 @@ private const val DURATION = 1000
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
-    startDestination: Screen.Welcome,
+    startDestination: Screen = Welcome,
     modifier: Modifier = Modifier
 ) {
+    val hiddenRoutes = listOf(
+        Welcome::class.qualifiedName,   // artık screen ve string eşlenmiş oldu screen -> string oldu class path veriyo
+        SignUp::class.qualifiedName,
+        SingIn::class.qualifiedName,
+    )
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry
+        ?.destination
+        ?.hierarchy
+        ?.mapNotNull { it.route }
+        ?.firstOrNull()
+
     Scaffold(
         modifier = modifier,
         bottomBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination = navBackStackEntry?.destination
-            NavigationBar {
-                Modifier.background(color = Color.White)
-                bottomNavItems.forEach { item ->
-                    NavigationBarItem(
-                        icon = {
-                            Icon(
-                                imageVector = item.icon,
-                                contentDescription = item.label,
-                            )
-                        },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = LocalColors.current.primary,
-                            unselectedIconColor = Color.Gray,
-                            selectedTextColor = LocalColors.current.primary,
-                            unselectedTextColor = Color.Gray
-                        ),
-                        label = { Text(item.label) },
-                        selected = currentDestination?.hierarchy
-                            ?.any { it.route == item.screen.route } == true,
-                        onClick = {
-                            navController.navigate(item.screen.route) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
+            if (currentRoute != null && currentRoute !in hiddenRoutes) {
+                NavigationBar {
+                    bottomNavItems.forEach { item ->
+                        NavigationBarItem(
+                            icon = { Icon(item.icon, contentDescription = item.label) },
+                            label = { Text(item.label) },
+                            selected = currentRoute == item.screen::class.qualifiedName,
+                            onClick = {
+                                navController.navigate(item.screen) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }
-                    )
+                            },
+                            colors = NavigationBarItemDefaults.colors(
+                                selectedIconColor = LocalColors.current.primary,
+                                unselectedIconColor = Color.Gray,
+                                selectedTextColor = LocalColors.current.primary,
+                                unselectedTextColor = Color.Gray
+                            )
+                        )
+                    }
                 }
             }
         }
-    ) {
-        val enterAnim = fadeIn(tween(DURATION))
-        val exitAnim = fadeOut(tween(DURATION))
-
+    ) { innerPadding ->
         NavHost(
-            modifier = Modifier.then(modifier),
+            modifier = Modifier
+                .then(modifier)
+                .background(Color.Transparent)
+                .padding(innerPadding),
             navController = navController,
             startDestination = startDestination,
-            enterTransition = { enterAnim },
-            exitTransition = { exitAnim },
-            popEnterTransition = { enterAnim },
-            popExitTransition = { exitAnim },
+            enterTransition = { fadeIn(tween(DURATION)) },
+            exitTransition = { fadeOut(tween(DURATION)) },
+            popEnterTransition = { fadeIn(tween(DURATION)) },
+            popExitTransition = { fadeOut(tween(DURATION)) }
         ) {
             composable<Main> {
-                val viewModel = koinViewModel<MainViewModel>()
-                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-                val uiEffect = viewModel.uiEffect
+                val vm = koinViewModel<MainViewModel>()
+                val state by vm.uiState.collectAsStateWithLifecycle()
+                val effect = vm.uiEffect
                 MainScreen()
             }
-            composable<Screen.Welcome> {
-                val viewModel = koinViewModel<WelcomeViewModel>()
-                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-                val uiEffect = viewModel.uiEffect
+            composable<Welcome> {
+                val vm = koinViewModel<WelcomeViewModel>()
+                val state by vm.uiState.collectAsStateWithLifecycle()
+                val effect = vm.uiEffect
                 WelcomeScreen(
-                    onSignUpClick = { navController.navigate(Screen.SignUp) },
-                    onSignInClick = { navController.navigate(Screen.SingIn) }
+                    onSignUpClick = { navController.navigate(SignUp) },
+                    onSignInClick = { navController.navigate(SingIn) }
                 )
             }
-            composable<Screen.SignUp> {
-                val viewModel = koinViewModel<SignUpViewModel>()
-                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-                val uiEffect = viewModel.uiEffect
+            composable<SignUp> {
+                val vm = koinViewModel<SignUpViewModel>()
+                val state by vm.uiState.collectAsStateWithLifecycle()
+                val effect = vm.uiEffect
                 SignUpScreen(
                     onSignUp = { navController.navigate(Main) },
-                    onSignIn = { navController.navigate(Screen.SingIn) },
+                    onSignIn = { navController.navigate(SingIn) },
                     onGoogleSignIn = { navController.navigate(Main) },
-                    onBack = { }
+                    onBack = { navController.popBackStack() }
                 )
             }
-            composable<Screen.SingIn> {
-                val viewModel = koinViewModel<SignInViewModel>()
-                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-                val uiEffect = viewModel.uiEffect
+            composable<SingIn> {
+                val vm = koinViewModel<SignInViewModel>()
+                val state by vm.uiState.collectAsStateWithLifecycle()
+                val effect = vm.uiEffect
                 SignInScreen(
-                    onSignUp = { navController.navigate(Main) },
-                    onSignIn = { navController.navigate(Screen.SingIn) },
+                    onSignUp = { navController.navigate(SignUp) },
+                    onSignIn = { navController.navigate(Main) },
                     onGoogleSignIn = { navController.navigate(Main) },
-                    onBack = {},
-                    onNavigateHome = { navController.navigate(Main) },
+                    onBack = { navController.popBackStack() },
+                    onNavigateHome = { navController.navigate(Main) }
                 )
             }
         }
