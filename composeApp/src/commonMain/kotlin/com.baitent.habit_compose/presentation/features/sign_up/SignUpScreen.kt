@@ -1,6 +1,7 @@
 package com.baitent.habit_compose.presentation.features.sign_up
 
 import CustomButton
+import LoadingWidget
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -176,16 +177,16 @@ fun SignUpScreen(
                     onClick = { onAction(SignUpContract.UiAction.OnGoogleSignInClick) }
                 )
             }
+        }
 
-            if (state.isLoading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+        if (state.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background.copy(alpha = 0.5f)),
+                contentAlignment = Alignment.Center
+            ) {
+                LoadingWidget()
             }
         }
     }
