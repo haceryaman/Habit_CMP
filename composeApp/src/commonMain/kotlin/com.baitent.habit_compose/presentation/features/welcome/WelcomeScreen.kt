@@ -36,7 +36,7 @@ fun WelcomeScreen(
     ) {
         Image(
             painter = painterResource(Res.drawable.welcome),
-            contentDescription = "Welcome"
+            contentDescription = null
         )
         Spacer(modifier = Modifier.height(AppDimensions.xLargeSpace))
         Text(stringResource(Res.string.welcome), style = MaterialTheme.typography.displayMedium)

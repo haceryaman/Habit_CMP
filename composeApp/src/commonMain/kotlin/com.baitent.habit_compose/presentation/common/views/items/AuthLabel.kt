@@ -25,7 +25,7 @@ fun AuthLabel(
     Row(
         modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom
     ) {
-        Text(text = title, style = TextStyle(fontSize = 44.sp))
+        Text(text = title, style = MaterialTheme.typography.displayMedium)
         Spacer(modifier = Modifier.weight(1f))
         CustomTextButton(
             text = textButtonTitle,

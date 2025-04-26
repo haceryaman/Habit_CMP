@@ -5,23 +5,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-
+import com.baitent.habit_compose.common.HabitTypography
 
 @Composable
-fun Habit_composeTheme(
+fun HabitComposeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) darkColors() else lightColors()
 
-    // CompositionLocalProvider ile renkleri sağlayın.
     CompositionLocalProvider(LocalColors provides colors) {
-
         MaterialTheme(
-          //  colorScheme = colors,
-            //typography = AppTypography,
+            typography = HabitTypography(),
             shapes = AppShapes,
             content = content
         )
@@ -29,4 +24,3 @@ fun Habit_composeTheme(
 }
 
 val AppShapes = Shapes()
-

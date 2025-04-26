@@ -97,4 +97,5 @@ android {
 }
 dependencies {
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.ui.text.android)
 }

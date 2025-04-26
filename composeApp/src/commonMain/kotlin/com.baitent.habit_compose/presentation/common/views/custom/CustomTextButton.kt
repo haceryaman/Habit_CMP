@@ -18,7 +18,7 @@ import com.baitent.habit_compose.presentation.theme.LocalColors
 
 @Composable
 fun CustomTextButton(
-     text: String,
+    text: String,
     onClick: () -> Unit,
     icon: ImageVector,
     iconColor: Color
@@ -28,12 +28,11 @@ fun CustomTextButton(
             .clickable { onClick() },
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
-    )  {
+    ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.labelLarge.copy(
+            style = MaterialTheme.typography.headlineLarge.copy(
                 color = LocalColors.current.primary,
-                fontWeight = MaterialTheme.typography.labelLarge.fontWeight
             )
         )
         IconButton(
@@ -42,7 +41,7 @@ fun CustomTextButton(
         ) {
             Icon(
                 imageVector = icon,
-                contentDescription = "Arrow Forward",
+                contentDescription = null,
                 tint = iconColor
             )
         }

@@ -36,12 +36,12 @@ fun CustomTextField(
             onValueChange = onValueChange,
             singleLine = true,
             shape = RoundedCornerShape(AppDimensions.textFieldRadius),
-            modifier = Modifier
-                .height(AppDimensions.textFieldHeight)
-                .fillMaxWidth(),
+            modifier = Modifier.height(AppDimensions.textFieldHeight).fillMaxWidth(),
 
             placeholder = placeholder?.let {
-                { Text(it, style = MaterialTheme.typography.bodySmall) }
+                { Text(it, style = MaterialTheme.typography.bodySmall.copy(
+                    color = LocalColors.current.lightGray
+                )) }
             },
 
             visualTransformation = when {
@@ -50,14 +50,10 @@ fun CustomTextField(
             },
 
             trailingIcon = if (isPassword) {
-                val image = if (passwordVisible)
-                    Icons.Default.Visibility
-                else
-                    Icons.Default.VisibilityOff
-                val desc = if (passwordVisible)
-                    null
-                else
-                    null
+                val image = if (passwordVisible) Icons.Default.Visibility
+                else Icons.Default.VisibilityOff
+                val desc = if (passwordVisible) null
+                else null
 
                 {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
@@ -75,8 +71,7 @@ fun CustomTextField(
                 focusedContainerColor = LocalColors.current.white,
                 unfocusedContainerColor = LocalColors.current.white,
                 focusedBorderColor = LocalColors.current.unfocusedBorderColor,
-            )
-        )
+            ))
 
         if (isError && errorMessage != null) {
             Text(
