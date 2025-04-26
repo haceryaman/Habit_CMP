@@ -41,9 +41,9 @@ fun SignInScreen(
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(uiEffect) {
-        viewModel.uiEffect.collect { effect ->
+        uiEffect.collect { effect ->
             when (effect) {
-                SignInContract.UiEffect.NavigateHome -> onSignIn()
+                SignInContract.UiEffect.NavigateHome   -> onSignIn()
                 SignInContract.UiEffect.NavigateSignUp -> onSignUp()
             }
         }
@@ -52,6 +52,9 @@ fun SignInScreen(
     LaunchedEffect(state.errorMessage) {
         state.errorMessage?.let { msg ->
             snackbarHostState.showSnackbar(msg, duration = SnackbarDuration.Short)
+            scope.launch {
+                viewModel.onAction(SignInContract.UiAction.OnDialogDismiss)
+            }
         }
     }
 
@@ -73,7 +76,7 @@ fun SignInScreen(
             Spacer(Modifier.height(AppDimensions.xxxLargeSpace))
 
             TextFieldItem(
-                errorMessageId = "",
+                errorMessageId = state.errorMessage ?: "",
                 label = stringResource(Res.string.email),
                 value = state.email,
                 placeholderId = stringResource(Res.string.emailPlaceholder),
@@ -88,7 +91,7 @@ fun SignInScreen(
             Spacer(Modifier.height(AppDimensions.mediumSpace))
 
             TextFieldItem(
-                errorMessageId = "",
+                errorMessageId = state.errorMessage ?: "",
                 label = stringResource(Res.string.password),
                 value = state.password,
                 placeholderId = stringResource(Res.string.passwordPlaceholder),
@@ -104,7 +107,7 @@ fun SignInScreen(
 
             CustomButton(
                 text = stringResource(Res.string.signIn),
-                onClick = onSignIn,
+                onClick = { scope.launch { viewModel.onAction(SignInContract.UiAction.OnSignInClick) } },
                 enabled = state.isButtonEnabled,
                 loading = state.isLoading
             )
@@ -121,7 +124,7 @@ fun SignInScreen(
             CustomButton(
                 text = stringResource(Res.string.google),
                 iconPainter = painterResource(Res.drawable.ic_google),
-                onClick = onGoogleSignUp,
+                onClick = { scope.launch { viewModel.onAction(SignInContract.UiAction.OnGoogleSignInClick) } },
                 enabled = !state.isLoading
             )
             Spacer(Modifier.weight(1f))

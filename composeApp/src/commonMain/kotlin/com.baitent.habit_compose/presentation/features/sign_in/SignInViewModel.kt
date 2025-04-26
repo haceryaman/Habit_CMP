@@ -7,6 +7,7 @@ import dev.gitlive.firebase.auth.FirebaseAuth
 import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.Firebase
 
+
 class SignInViewModel : ViewModel(),
     MVI<SignInContract.UiState, SignInContract.UiAction, SignInContract.UiEffect>
     by mvi(SignInContract.UiState()) {
@@ -37,13 +38,25 @@ class SignInViewModel : ViewModel(),
 
     private suspend fun performEmailSignIn() {
         updateUiState { copy(isLoading = true) }
+
         try {
             auth.signInWithEmailAndPassword(uiState.value.email, uiState.value.password)
             updateUiState { copy(isLoading = false) }
             emitUiEffect(SignInContract.UiEffect.NavigateHome)
+
         } catch (e: Exception) {
+            val msg = when {
+                e.message?.contains("There is no user record") == true ||
+                        e.message?.contains("user-not-found", ignoreCase = true) == true ->
+                    "Böyle bir kullanıcı bulunamadı"
+                e.message?.contains("The password is invalid", ignoreCase = true) == true ||
+                        e.message?.contains("wrong-password", ignoreCase = true) == true ->
+                    "Şifre yanlış"
+                else ->
+                    e.message ?: "Bilinmeyen bir hata oluştu"
+            }
             updateUiState {
-                copy(isLoading = false, errorMessage = e.message ?: "Bilinmeyen bir hata oluştu")
+                copy(isLoading = false, errorMessage = msg)
             }
         }
     }
