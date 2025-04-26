@@ -4,7 +4,6 @@ import MainScreen
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -22,6 +21,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -83,6 +83,7 @@ fun NavigationGraph(
 
     Scaffold(
         modifier = modifier,
+        containerColor = LocalColors.current.background,
         bottomBar = {
             if (currentRoute != null && currentRoute !in hiddenRoutes) {
                 NavigationBar {
@@ -115,8 +116,7 @@ fun NavigationGraph(
         NavHost(
             modifier = Modifier
                 .then(modifier)
-                .background(Color.Transparent)
-                .padding(innerPadding),
+                .padding(innerPadding).padding(8.dp),
             navController = navController,
             startDestination = startDestination,
             enterTransition = { fadeIn(tween(DURATION)) },

@@ -16,7 +16,7 @@ fun HabitComposeTheme(
 
     CompositionLocalProvider(LocalColors provides colors) {
         MaterialTheme(
-           // colorScheme = ,
+           // colorScheme =  ,
             typography = HabitTypography(),
             shapes = AppShapes,
             content = content

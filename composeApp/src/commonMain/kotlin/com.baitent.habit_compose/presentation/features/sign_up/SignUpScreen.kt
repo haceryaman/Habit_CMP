@@ -8,11 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -41,6 +37,7 @@ import habit_compose.composeapp.generated.resources.signUp
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import com.baitent.habit_compose.presentation.common.views.components.BaseScaffold
 import habit_compose.composeapp.generated.resources.google
 import habit_compose.composeapp.generated.resources.ic_google
 import kotlinx.coroutines.flow.Flow
@@ -91,8 +88,7 @@ fun SignUpScreen(
         }
     }
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
+    BaseScaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) {
         Box(
@@ -101,8 +97,7 @@ fun SignUpScreen(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(AppDimensions.mediumSpace),
+                    .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AuthLabel(

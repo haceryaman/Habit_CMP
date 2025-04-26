@@ -14,17 +14,10 @@ class SignInViewModel : ViewModel(),
 
     private val auth: FirebaseAuth = Firebase.auth
 
+
+
     init {
-        // Önceden kaydedilmiş e-postayı yükle
-        /*val saved = prefs.getString("saved_email", "") ?: ""
-        if (saved.isNotBlank()) {
-            updateUiState {
-                copy(
-                    email = saved,
-                    isRememberMe = true
-                ).enableButtonIfValid()
-            }
-        }*/
+
     }
 
     override suspend fun onAction(uiAction: SignInContract.UiAction) {

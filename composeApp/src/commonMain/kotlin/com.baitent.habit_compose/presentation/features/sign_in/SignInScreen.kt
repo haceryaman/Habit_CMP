@@ -6,6 +6,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.baitent.habit_compose.presentation.common.views.components.BaseScaffold
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -57,8 +58,9 @@ fun SignInScreen(
         }
     }
 
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    BaseScaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+
     ) {
         Column(
             modifier = Modifier
