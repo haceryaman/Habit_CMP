@@ -170,8 +170,6 @@ fun NavigationGraph(
                     uiEffect =  effect,
                     onSignUp = { navController.navigate(SignUp) },
                     onSignIn = { navController.navigate(Main)},
-                    onGoogleSignUp = { navController.navigate(Main) },
-                    onBack = { navController.popBackStack() },
                 )
             }
         }

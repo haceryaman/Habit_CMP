@@ -6,13 +6,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import com.baitent.habit_compose.presentation.common.views.items.TextFieldItem
 import com.baitent.habit_compose.presentation.common.views.items.AuthLabel
-import com.baitent.habit_compose.presentation.features.sign_up.SignUpContract
 import com.baitent.habit_compose.presentation.theme.AppDimensions
 import habit_compose.composeapp.generated.resources.Res
 import habit_compose.composeapp.generated.resources.email
@@ -33,9 +31,7 @@ fun SignInScreen(
     state: SignInContract.UiState,
     uiEffect: Flow<SignInContract.UiEffect>,
     onSignIn: () -> Unit,
-    onGoogleSignUp: () -> Unit,
     onSignUp: () -> Unit,
-    onBack: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
@@ -43,8 +39,11 @@ fun SignInScreen(
     LaunchedEffect(uiEffect) {
         uiEffect.collect { effect ->
             when (effect) {
-                SignInContract.UiEffect.NavigateHome   -> onSignIn()
+                SignInContract.UiEffect.NavigateHome -> onSignIn()
                 SignInContract.UiEffect.NavigateSignUp -> onSignUp()
+                is SignInContract.UiEffect.ShowSnackbar -> {
+                    snackbarHostState.showSnackbar(effect.message)
+                }
             }
         }
     }
@@ -88,7 +87,7 @@ fun SignInScreen(
                 }
             )
 
-            Spacer(Modifier.height(AppDimensions.mediumSpace))
+            Spacer(Modifier.height(AppDimensions.smallSpace))
 
             TextFieldItem(
                 errorMessageId = state.errorMessage ?: "",
@@ -102,6 +101,33 @@ fun SignInScreen(
                     }
                 }
             )
+
+            Spacer(Modifier.height(AppDimensions.mediumSpace))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(
+                    checked = state.isRememberMe,
+                    onCheckedChange = { checked ->
+                        scope.launch {
+                            viewModel.onAction(SignInContract.UiAction.OnRememberMeToggled(checked))
+                        }
+                    }
+                )
+                Text(text = "Remember Me")
+                Spacer(Modifier.weight(1f))
+                TextButton(
+                    onClick = {
+                        scope.launch {
+                            viewModel.onAction(SignInContract.UiAction.OnForgotPasswordClick)
+                        }
+                    }
+                ) {
+                    Text(text = "Forgot Password?")
+                }
+            }
 
             Spacer(Modifier.height(AppDimensions.mediumSpace))
 
