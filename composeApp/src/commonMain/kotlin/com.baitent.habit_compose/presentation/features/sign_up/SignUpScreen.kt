@@ -11,12 +11,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -41,13 +41,15 @@ import habit_compose.composeapp.generated.resources.signUp
 import org.jetbrains.compose.resources.stringResource
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.lifecycle.viewmodel.compose.viewModel
+import habit_compose.composeapp.generated.resources.google
+import habit_compose.composeapp.generated.resources.ic_google
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun SignUpScreen(
-    viewModel: SignUpViewModel = viewModel(),
+    viewModel: SignUpViewModel,
     onSignIn: () -> Unit,
     onGoogleSignUp: () -> Unit,
     onSignUp: () -> Unit,
@@ -100,11 +102,12 @@ fun SignUpScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(AppDimensions.mediumSpace)
+                    .padding(AppDimensions.mediumSpace),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AuthLabel(
                     title = stringResource(Res.string.signUp),
-                    onClick = onBack,
+                    onClick = onSignIn,
                     textButtonTitle = stringResource(Res.string.signIn)
                 )
                 Spacer(Modifier.height(AppDimensions.xxxLargeSpace))
@@ -171,9 +174,14 @@ fun SignUpScreen(
 
                 Spacer(Modifier.weight(1f))
 
-                CustomButton(
+                Text(
                     text = stringResource(Res.string.orSignUpWith),
-                    icon = Icons.Outlined.Settings,
+                    style= MaterialTheme.typography.bodySmall,
+                )
+                Spacer(Modifier.height(AppDimensions.smallPadding))
+                CustomButton(
+                    text = stringResource(Res.string.google),
+                    iconPainter = painterResource(Res.drawable.ic_google),
                     onClick = { onAction(SignUpContract.UiAction.OnGoogleSignInClick) }
                 )
             }

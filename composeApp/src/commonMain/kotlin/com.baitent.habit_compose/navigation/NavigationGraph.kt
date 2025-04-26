@@ -165,11 +165,13 @@ fun NavigationGraph(
                 val state by vm.uiState.collectAsStateWithLifecycle()
                 val effect = vm.uiEffect
                 SignInScreen(
+                    viewModel = vm,
+                    state= state,
+                    uiEffect =  effect,
                     onSignUp = { navController.navigate(SignUp) },
-                    onSignIn = { navController.navigate(Main) },
-                    onGoogleSignIn = { navController.navigate(Main) },
+                    onSignIn = { navController.navigate(Main)},
+                    onGoogleSignUp = { navController.navigate(Main) },
                     onBack = { navController.popBackStack() },
-                    onNavigateHome = { navController.navigate(Main) }
                 )
             }
         }

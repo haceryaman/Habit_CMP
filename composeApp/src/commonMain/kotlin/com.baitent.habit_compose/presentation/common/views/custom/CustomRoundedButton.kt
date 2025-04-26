@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -18,13 +19,15 @@ import com.baitent.habit_compose.presentation.theme.LocalColors
 
 @Composable
 fun CustomButton(
-    text: String?,
+    text: String? = null,
     onClick: () -> Unit,
-    icon: ImageVector? = null,
+    iconVector: ImageVector? = null,
+    iconPainter: Painter? = null,
+    iconContent: (@Composable () -> Unit)? = null,
     modifier: Modifier = Modifier,
     color: Color = LocalColors.current.primary,
     enabled: Boolean = true,
-    loading: Boolean=false,
+    loading: Boolean = false,
 ) {
     Button(
         onClick = onClick,
@@ -33,24 +36,36 @@ fun CustomButton(
             .fillMaxWidth(),
         shape = RoundedCornerShape(Dimens.rounded15dp),
         colors = ButtonDefaults.buttonColors(containerColor = color),
-        enabled = enabled
+        enabled = enabled && !loading
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            icon?.let {
+            iconVector?.let {
                 Icon(
                     imageVector = it,
                     contentDescription = null,
                     modifier = Modifier.size(24.dp)
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(Modifier.width(8.dp))
             }
-            if (text != null) {
+            iconPainter?.let {
+                Icon(
+                    painter = it,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(Modifier.width(8.dp))
+            }
+            iconContent?.let { content ->
+                content()
+                Spacer(Modifier.width(8.dp))
+            }
+            text?.let {
                 Text(
-                    text = text,
-                    style = MaterialTheme.typography.bodyLarge
+                    text = it,
+                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium)
                 )
             }
         }

@@ -5,27 +5,21 @@ object SignInContract {
         val email: String = "",
         val password: String = "",
         val isLoading: Boolean = false,
-        val isSuccess: Boolean = false,
         val errorMessage: String? = null,
-        val isButtonEnable: Boolean = false
+        val isButtonEnabled: Boolean = false
     )
 
     sealed class UiAction {
-        object OnEmailChange : UiAction() {
-            operator fun invoke(email: String) = OnEmailChanged(email)
-        }
         data class OnEmailChanged(val email: String) : UiAction()
-        object OnPasswordChange : UiAction() {
-            operator fun invoke(password: String) = OnPasswordChanged(password)
-        }
         data class OnPasswordChanged(val password: String) : UiAction()
-        object OnSignInClick : UiAction()
-        object OnGoogleSignInClick : UiAction()
-        object OnDialogDismiss : UiAction()
+        data object OnSignInClick : UiAction()
+        data object OnGoogleSignInClick : UiAction()
+        data object OnSignUpClick : UiAction()
+        data object OnDialogDismiss : UiAction()
     }
 
     sealed class UiEffect {
-        object NavigateHome : UiEffect()
-        object NavigateSignUp : UiEffect()
+        data object NavigateHome : UiEffect()
+        data object NavigateSignUp : UiEffect()
     }
 }

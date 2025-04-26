@@ -14,7 +14,6 @@ object SignUpContract {
         val username: String = "",
         val password: String = "",
         val confirmPassword: String = "",
-        //    val dialogState: DialogState? = null,
         val isButtonEnable: Boolean = false,
     )
 
