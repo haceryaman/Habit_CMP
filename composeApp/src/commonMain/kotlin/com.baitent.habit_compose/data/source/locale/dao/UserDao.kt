@@ -7,7 +7,7 @@ import com.baitent.habit_compose.data.models.UserEntity
 
 import androidx.room.*
 
-@Dao
+/*@Dao
 interface UserDao {
     /** Return the one user flagged “remember me” (or null) */
     @Query("SELECT * FROM users_table WHERE isRememberMe = 1 LIMIT 1")
@@ -21,4 +21,4 @@ interface UserDao {
     @Query("UPDATE users_table SET isRememberMe = 0 WHERE isRememberMe = 1")
     suspend fun clearRememberMe()
 }
-
+*/

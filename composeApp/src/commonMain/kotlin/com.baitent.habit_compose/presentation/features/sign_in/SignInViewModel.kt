@@ -1,24 +1,26 @@
 package com.baitent.habit_compose.presentation.features.sign_in
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.baitent.habit_compose.data.models.UserEntity
-import com.baitent.habit_compose.data.repository.UserRepository
 import com.baitent.habit_compose.delegation.MVI
 import com.baitent.habit_compose.delegation.mvi
+import com.baitent.habit_compose.domain.repository.AuthRepository
+import com.baitent.habit_compose.domain.repository.UserRepository
+import com.baitent.habit_compose.navigation.Screen
 import dev.gitlive.firebase.auth.FirebaseAuth
 import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.Firebase
-
+import kotlinx.coroutines.launch
 
 class SignInViewModel(
-    //private val repo: UserRepository,
+    private val authRepo: AuthRepository,
+    private val userRepo: UserRepository
 ) : ViewModel(),
     MVI<SignInContract.UiState, SignInContract.UiAction, SignInContract.UiEffect>
     by mvi(SignInContract.UiState()) {
 
     private val auth: FirebaseAuth = Firebase.auth
-
-
 
     override suspend fun onAction(uiAction: SignInContract.UiAction) {
         when (uiAction) {
@@ -36,7 +38,11 @@ class SignInViewModel(
 
             SignInContract.UiAction.OnForgotPasswordClick -> handleForgotPassword()
 
-            SignInContract.UiAction.OnSignInClick -> performEmailSignIn()
+            SignInContract.UiAction.OnSignInClick -> onSignIn(
+                uiState.value.email,
+                uiState.value.password,
+                uiState.value.isRememberMe
+            )
 
             SignInContract.UiAction.OnGoogleSignInClick -> {
                 // TODO: Google Sign-In flow’u ekle
@@ -71,48 +77,45 @@ class SignInViewModel(
         }
     }
 
-    private suspend fun performEmailSignIn() {
-        updateUiState { copy(isLoading = true) }
-
-        try {
-            auth.signInWithEmailAndPassword(uiState.value.email, uiState.value.password)
-
-         /*   repo.clearRememberMe()
-
-            if (uiState.value.isRememberMe) {
-                repo.save(
-                    UserEntity(
-                        email     = uiState.value.email,
-                        userName  = "dummy_hacer",
+    private fun onSignIn(
+        email: String,
+        password: String,
+        rememberMeChecked: Boolean
+    ) {
+        viewModelScope.launch {
+            authRepo.signIn(email, password).collect { result ->
+                result.onSuccess { firebaseUser ->
+                    val userEntity = UserEntity(
+                        email = firebaseUser.email.orEmpty(),
+                        userName = firebaseUser.displayName,
                         firstName = null,
-                        lastName  = null,
-                        avatarUrl = null,
-                        isRememberMe = true
+                        lastName = null,
+                        avatarUrl = "firebaseUser.photoUrl?.toString()",
+                        isRememberMe = rememberMeChecked
                     )
-                )
-            } else {
-                repo.clearRememberMe()
-            }*/
+                    userRepo.save(userEntity)
 
-            updateUiState { copy(isLoading = false) }
-            emitUiEffect(SignInContract.UiEffect.NavigateHome)
-
-        } catch (e: Exception) {
-            val msg = when {
-                e.message?.contains("user-not-found", ignoreCase = true) == true ->
-                    "Böyle bir kullanıcı bulunamadı"
-
-                e.message?.contains("wrong-password", ignoreCase = true) == true ->
-                    "Şifre yanlış"
-
-                else ->
-                    e.message ?: "Bilinmeyen bir hata oluştu"
-            }
-            updateUiState {
-                copy(isLoading = false, errorMessage = msg)
+                    if (rememberMeChecked) {
+                        emitUiEffect(SignInContract.UiEffect.NavigateHome)
+                    } else {
+                        emitUiEffect(SignInContract.UiEffect.NavigateSignUp)
+                    }
+                }.onFailure { exception ->
+                    emitUiEffect(
+                        SignInContract.UiEffect.ShowSnackbar(
+                            exception.message ?: "Giriş sırasında bir hata oluştu"
+                        )
+                    )
+                }
             }
         }
     }
+
+
+    /** Uygulama açılırken çağrılabilir: */
+    suspend fun decideStartDestination(): Screen =
+        if (userRepo.getRemembered() != null) Screen.Main
+        else Screen.Welcome
 
     private fun SignInContract.UiState.enableButtonIfValid(): SignInContract.UiState {
         val enabled = email.isNotBlank() && password.length >= 6

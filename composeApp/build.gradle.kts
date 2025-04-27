@@ -67,6 +67,10 @@ kotlin {
             implementation(libs.gitlive.firebase.auth)
             implementation(libs.androidx.room.runtime)
 
+
+            implementation(libs.multiplatform.settings.no.arg)
+            implementation(libs.multiplatform.settings.coroutines)
+
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
