@@ -95,11 +95,7 @@ class SignInViewModel(
                     )
                     userRepo.save(userEntity)
 
-                    if (rememberMeChecked) {
-                        emitUiEffect(SignInContract.UiEffect.NavigateHome)
-                    } else {
-                        emitUiEffect(SignInContract.UiEffect.NavigateSignUp)
-                    }
+                    emitUiEffect(SignInContract.UiEffect.NavigateHome)
                 }.onFailure { exception ->
                     emitUiEffect(
                         SignInContract.UiEffect.ShowSnackbar(
@@ -110,8 +106,6 @@ class SignInViewModel(
             }
         }
     }
-
-
     /** Uygulama açılırken çağrılabilir: */
     suspend fun decideStartDestination(): Screen =
         if (userRepo.getRemembered() != null) Screen.Main
