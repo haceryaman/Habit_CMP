@@ -65,7 +65,7 @@ private const val DURATION = 1000
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
-    startDestination: Screen = Welcome,
+    startDestination: Screen,
     modifier: Modifier = Modifier
 ) {
     val hiddenRoutes = listOf(

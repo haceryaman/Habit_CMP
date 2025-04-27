@@ -1,6 +1,8 @@
 package com.baitent.habit_compose.presentation.features.sign_in
 
 import androidx.lifecycle.ViewModel
+import com.baitent.habit_compose.data.models.UserEntity
+import com.baitent.habit_compose.data.repository.UserRepository
 import com.baitent.habit_compose.delegation.MVI
 import com.baitent.habit_compose.delegation.mvi
 import dev.gitlive.firebase.auth.FirebaseAuth
@@ -8,17 +10,15 @@ import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.Firebase
 
 
-class SignInViewModel : ViewModel(),
+class SignInViewModel(
+    //private val repo: UserRepository,
+) : ViewModel(),
     MVI<SignInContract.UiState, SignInContract.UiAction, SignInContract.UiEffect>
     by mvi(SignInContract.UiState()) {
 
     private val auth: FirebaseAuth = Firebase.auth
 
 
-
-    init {
-
-    }
 
     override suspend fun onAction(uiAction: SignInContract.UiAction) {
         when (uiAction) {
@@ -77,12 +77,22 @@ class SignInViewModel : ViewModel(),
         try {
             auth.signInWithEmailAndPassword(uiState.value.email, uiState.value.password)
 
-            // Başarılıysa "Remember Me" ayarına göre e-postayı kaydet veya sil
+         /*   repo.clearRememberMe()
+
             if (uiState.value.isRememberMe) {
-                // prefs.edit().putString("saved_email", uiState.value.email).apply()
+                repo.save(
+                    UserEntity(
+                        email     = uiState.value.email,
+                        userName  = "dummy_hacer",
+                        firstName = null,
+                        lastName  = null,
+                        avatarUrl = null,
+                        isRememberMe = true
+                    )
+                )
             } else {
-                //  prefs.edit().remove("saved_email").apply()
-            }
+                repo.clearRememberMe()
+            }*/
 
             updateUiState { copy(isLoading = false) }
             emitUiEffect(SignInContract.UiEffect.NavigateHome)

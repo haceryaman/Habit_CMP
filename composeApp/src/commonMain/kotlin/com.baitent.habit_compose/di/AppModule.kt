@@ -2,7 +2,9 @@ package com.baitent.habit_compose.di
 
 import androidx.lifecycle.SavedStateHandle
 import com.baitent.habit_compose.data.repository.MainRepositoryImpl
+import com.baitent.habit_compose.data.source.locale.database.AppDatabase
 import com.baitent.habit_compose.data.source.remote.MainService
+import com.baitent.habit_compose.database.getRoomDatabase
 import com.baitent.habit_compose.domain.repository.MainRepository
 import com.baitent.habit_compose.presentation.features.welcome.WelcomeViewModel
 import com.baitent.habit_compose.presentation.features.sign_up.SignUpViewModel
@@ -41,11 +43,11 @@ val dataModule = module {
     single<MainService> { MainService(get()) }
     single<MainRepository> { MainRepositoryImpl(get()) }
     single { SavedStateHandle() }
+    single<AppDatabase> { getRoomDatabase(get()) }
 }
 
 val viewModelModule = module {
     factoryOf(::MainViewModel)
-
     factoryOf(::WelcomeViewModel)
     factoryOf(::SignUpViewModel)
     factoryOf(::SignInViewModel)

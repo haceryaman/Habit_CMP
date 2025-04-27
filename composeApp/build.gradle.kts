@@ -1,4 +1,3 @@
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -66,7 +65,6 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.gitlive.firebase.firestore)
             implementation(libs.gitlive.firebase.auth)
-
             implementation(libs.androidx.room.runtime)
 
         }
@@ -116,8 +114,13 @@ configurations.all {
     exclude(group = "com.intellij", module = "annotations")
 }
 
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.androidx.ui.text.android)
+    implementation(libs.androidx.sqlite.bundled.android)
 
 }
