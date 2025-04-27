@@ -8,6 +8,10 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinxSerialization)
     id("com.google.gms.google-services")
+
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
+
 }
 
 kotlin {
@@ -36,6 +40,9 @@ kotlin {
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
             implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.androidx.room.paging)
+            implementation(libs.androidx.room.compiler)
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -58,6 +65,9 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.gitlive.firebase.firestore)
             implementation(libs.gitlive.firebase.auth)
+
+            implementation(libs.androidx.room.runtime)
+
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -94,8 +104,14 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+
 }
 dependencies {
     implementation(libs.firebase.auth.ktx)
     implementation(libs.androidx.ui.text.android)
+
 }
