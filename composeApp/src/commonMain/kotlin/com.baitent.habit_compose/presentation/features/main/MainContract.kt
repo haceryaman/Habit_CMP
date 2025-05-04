@@ -1,4 +1,4 @@
-package com.baitent.habit_compose.ui.main
+package com.baitent.habit_compose.presentation.features.main
 
 object MainContract {
     data class UiState(

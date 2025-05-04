@@ -28,12 +28,11 @@ fun LoadingBar(
     amplitude: Dp = 12.dp,
     totalDuration: Int = 1000
 ) {
-    // Topların renkleri JSON'daki dolgu renklerinden alındı
     val colors = listOf(
-        Color(0xFFFFBF3F), // sarı-turuncu :contentReference[oaicite:2]{index=2}&#8203;:contentReference[oaicite:3]{index=3}
-        Color(0xFF5BC2E7), // açık mavi :contentReference[oaicite:4]{index=4}&#8203;:contentReference[oaicite:5]{index=5}
-        Color(0xFF00B38A), // yeşil :contentReference[oaicite:6]{index=6}&#8203;:contentReference[oaicite:7]{index=7}
-        Color(0xFF3298BD)  // koyu mavi :contentReference[oaicite:8]{index=8}&#8203;:contentReference[oaicite:9]{index=9}
+        Color(0xFFFFBF3F),
+        Color(0xFF5BC2E7),
+        Color(0xFF00B38A),
+        Color(0xFF3298BD)
     )
     val delayBetween = totalDuration / colors.size
 
@@ -42,14 +41,10 @@ fun LoadingBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         colors.forEachIndexed { index, color ->
-            // Her top için ayrı animasyonlu offset
             val offsetY = remember { Animatable(0f) }
             LaunchedEffect(Unit) {
-                // Sürekli dönen bir döngü
                 while (true) {
-                    // Başlangıç gecikmesi
                     delay((index * delayBetween).toLong())
-                    // Yukarı zıplama
                     offsetY.animateTo(
                         targetValue = -amplitude.value,
                         animationSpec = tween(
@@ -57,7 +52,6 @@ fun LoadingBar(
                             easing = FastOutSlowInEasing
                         )
                     )
-                    // Geri inme
                     offsetY.animateTo(
                         targetValue = 0f,
                         animationSpec = tween(
@@ -65,8 +59,6 @@ fun LoadingBar(
                             easing = LinearOutSlowInEasing
                         )
                     )
-                    // Kalan sürede bekle (dinlenme fazı)
-                    // Dinlenme fazı: Int hesaplamayı önce maksimum 0’a çektik, sonra Long’a çevirdik
                     val rest = (totalDuration - 2 * (totalDuration / 3) - index * delayBetween)
                         .coerceAtLeast(0)
                         .toLong()

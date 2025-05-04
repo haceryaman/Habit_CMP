@@ -35,7 +35,7 @@ import com.baitent.habit_compose.presentation.features.sign_up.SignUpScreen
 import com.baitent.habit_compose.presentation.features.sign_up.SignUpViewModel
 import com.baitent.habit_compose.presentation.features.welcome.WelcomeScreen
 import com.baitent.habit_compose.presentation.features.welcome.WelcomeViewModel
-import com.baitent.habit_compose.ui.main.MainViewModel
+import com.baitent.habit_compose.presentation.features.main.MainViewModel
 import com.baitent.habit_compose.presentation.theme.LocalColors
 import org.koin.compose.viewmodel.koinViewModel
 import com.baitent.habit_compose.navigation.Screen.Main

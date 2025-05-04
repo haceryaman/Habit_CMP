@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class SignInViewModel(
     private val authRepo: AuthRepository,
-    private val userRepo: UserRepository
+    private val userRepo: UserRepository,
 ) : ViewModel(),
     MVI<SignInContract.UiState, SignInContract.UiAction, SignInContract.UiEffect>
     by mvi(SignInContract.UiState()) {

@@ -11,7 +11,7 @@ import com.baitent.habit_compose.domain.repository.UserRepository
 import com.baitent.habit_compose.presentation.features.welcome.WelcomeViewModel
 import com.baitent.habit_compose.presentation.features.sign_up.SignUpViewModel
 import com.baitent.habit_compose.presentation.features.sign_in.SignInViewModel
-import com.baitent.habit_compose.ui.main.MainViewModel
+import com.baitent.habit_compose.presentation.features.main.MainViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest

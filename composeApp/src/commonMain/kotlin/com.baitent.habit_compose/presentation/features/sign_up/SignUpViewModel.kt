@@ -1,11 +1,13 @@
 package com.baitent.habit_compose.presentation.features.sign_up
 
 import androidx.lifecycle.ViewModel
+import com.baitent.habit_compose.data.models.UserEntity
 import com.baitent.habit_compose.delegation.MVI
 import com.baitent.habit_compose.delegation.mvi
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.FirebaseAuth
 import dev.gitlive.firebase.auth.auth
+import dev.gitlive.firebase.firestore.firestore
 
 class SignUpViewModel : ViewModel(),
     MVI<SignUpContract.UiState, SignUpContract.UiAction, SignUpContract.UiEffect> by mvi(
@@ -13,6 +15,7 @@ class SignUpViewModel : ViewModel(),
     ) {
 
     private val auth: FirebaseAuth = Firebase.auth
+    private val db = Firebase.firestore
 
 
     override suspend fun onAction(uiAction: SignUpContract.UiAction) {
@@ -38,6 +41,20 @@ class SignUpViewModel : ViewModel(),
         updateUiState { copy(isLoading = true) }
         try {
             auth.createUserWithEmailAndPassword(uiState.value.email, uiState.value.password)
+
+            val userEntity = UserEntity(
+                email = uiState.value.email,
+                userName = uiState.value.username,
+                firstName = null,
+                lastName = null,
+                avatarUrl = null,
+                isRememberMe = null
+            )
+
+            db.collection("users")
+                .document(uiState.value.email)
+                .set(userEntity)
+
             updateUiState { copy(isLoading = false, isSuccess = true) }
             emitUiEffect(SignUpContract.UiEffect.NavigateSignUp)
         } catch (e: Exception) {

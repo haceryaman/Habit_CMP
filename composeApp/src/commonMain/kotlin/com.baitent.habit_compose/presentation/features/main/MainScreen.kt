@@ -46,7 +46,7 @@ fun MainScreen() {
                     .size(56.dp)
                     .border(
                         width = 2.dp,
-                        color = Color.White,
+                        color = LocalColors.current.secondaryVariant,
                         shape = CircleShape
                     ),
                 shape = CircleShape,
