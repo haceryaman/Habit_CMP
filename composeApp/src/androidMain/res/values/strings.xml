@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">habit_compose</string>
-    <string name="all">Show All</string>
     <string name="TodayHabit">Today Habit</string>x
     <string name="habitItemText">İngilizce Çalış</string>x
     <string name="signUp">Sign Up</string>

@@ -50,13 +50,13 @@ sealed class BottomNavItem(
     val label: String
 ) {
     data object Home : BottomNavItem(Main, Icons.Default.Home, "Ana Sayfa")
-    data object Search : BottomNavItem(Welcome, Icons.Default.Search, "Ara")
+   // data object Habits : BottomNavItem(Welcome, Icons.Default.Search, "Ara")
     data object Profile : BottomNavItem(SignUp, Icons.Default.Person, "Profil")
 }
 
 private val bottomNavItems = listOf(
     BottomNavItem.Home,
-    BottomNavItem.Search,
+  //  BottomNavItem.Search,
     BottomNavItem.Profile
 )
 

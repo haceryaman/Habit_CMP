@@ -39,7 +39,7 @@ fun CardTodayHabitComponent(habits: List<HabitItemData>) {
                 titleTextColor = Color.Black,
                 seeAllTextColor = colors.primary,
                 titleText = stringResource(Res.string.TodayHabit),
-                seeAllText = stringResource(Res.string.showAll),
+                seeAllText = null,
             ) {
             }
 

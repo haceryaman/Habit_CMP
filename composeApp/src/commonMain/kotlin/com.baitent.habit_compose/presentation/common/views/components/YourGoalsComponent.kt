@@ -56,7 +56,7 @@ fun YourGoalsComponent(allGoals: List<HabitItemData>) {
                 titleTextColor = Color.Black,
                 seeAllTextColor = colors.primary,
                 titleText = stringResource(Res.string.yourGoals),
-                seeAllText = stringResource(Res.string.showAll),
+                seeAllText = null,
             ) {
             }
 
