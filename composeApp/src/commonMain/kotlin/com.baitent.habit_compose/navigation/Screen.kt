@@ -15,4 +15,6 @@ sealed interface Screen {
     @Serializable
     data object SingIn : Screen
 
+    @Serializable
+    data object Splash : Screen
 }

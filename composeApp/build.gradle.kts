@@ -70,6 +70,7 @@ kotlin {
 
             implementation(libs.multiplatform.settings.no.arg)
             implementation(libs.multiplatform.settings.coroutines)
+            implementation(libs.core.splashscreen)
 
         }
         iosMain.dependencies {

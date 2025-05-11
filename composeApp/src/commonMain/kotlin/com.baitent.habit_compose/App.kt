@@ -1,8 +1,6 @@
 package com.baitent.habit_compose
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.baitent.habit_compose.domain.repository.UserRepository
@@ -17,22 +15,11 @@ fun App() {
 
     val userRepo: UserRepository = getKoin().get()
 
-    val startDestination by produceState<Screen>(
-        initialValue = Screen.Welcome,
-        key1 = userRepo
-    ) {
-        value = if (userRepo.getRemembered() != null) {
-            Screen.Main
-        } else {
-            Screen.Welcome
-        }
-    }
-
     HabitComposeTheme {
         NavigationGraph(
             modifier = Modifier,
             navController = navController,
-            startDestination = startDestination
+            startDestination = Screen.Splash
         )
     }
 }

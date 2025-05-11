@@ -12,6 +12,7 @@ import com.baitent.habit_compose.presentation.features.welcome.WelcomeViewModel
 import com.baitent.habit_compose.presentation.features.sign_up.SignUpViewModel
 import com.baitent.habit_compose.presentation.features.sign_in.SignInViewModel
 import com.baitent.habit_compose.presentation.features.main.MainViewModel
+import com.baitent.habit_compose.presentation.features.splash.SplashViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -49,7 +50,6 @@ val dataModule = module {
     single { SavedStateHandle() }
 
     single { SettingsRepository() }
-    single<UserRepository> { UserRepositoryImpl(get()) }
     single<AuthRepository> { AuthRepository }
 }
 
@@ -58,6 +58,7 @@ val viewModelModule = module {
     factoryOf(::WelcomeViewModel)
     factoryOf(::SignUpViewModel)
     factoryOf(::SignInViewModel)
+    factoryOf(::SplashViewModel)
 }
 
 fun initKoin() {

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -42,6 +41,8 @@ import com.baitent.habit_compose.navigation.Screen.Main
 import com.baitent.habit_compose.navigation.Screen.Welcome
 import com.baitent.habit_compose.navigation.Screen.SignUp
 import com.baitent.habit_compose.navigation.Screen.SingIn
+import com.baitent.habit_compose.presentation.features.splash.SplashScreen
+import com.baitent.habit_compose.presentation.features.splash.SplashViewModel
 import kotlinx.coroutines.launch
 
 sealed class BottomNavItem(
@@ -50,13 +51,14 @@ sealed class BottomNavItem(
     val label: String
 ) {
     data object Home : BottomNavItem(Main, Icons.Default.Home, "Ana Sayfa")
-   // data object Habits : BottomNavItem(Welcome, Icons.Default.Search, "Ara")
+
+    // data object Habits : BottomNavItem(Welcome, Icons.Default.Search, "Ara")
     data object Profile : BottomNavItem(SignUp, Icons.Default.Person, "Profil")
 }
 
 private val bottomNavItems = listOf(
     BottomNavItem.Home,
-  //  BottomNavItem.Search,
+    //  BottomNavItem.Search,
     BottomNavItem.Profile
 )
 
@@ -65,7 +67,7 @@ private const val DURATION = 1000
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
-    startDestination: Screen,
+    startDestination: Screen.Splash,
     modifier: Modifier = Modifier
 ) {
     val hiddenRoutes = listOf(
@@ -130,6 +132,20 @@ fun NavigationGraph(
                 val effect = vm.uiEffect
                 MainScreen()
             }
+            composable<Screen.Splash> {
+                val vm = koinViewModel<SplashViewModel>()
+                val state by vm.uiState.collectAsStateWithLifecycle()
+                val effect = vm.uiEffect
+                SplashScreen(
+                    onNavigateToHome = {
+                        navController.navigate(Main)
+                    },
+                    onNavigateToWelcome = {
+                        navController.navigate(Welcome)
+                    },
+                    uiEffect = effect,
+                )
+            }
             composable<Welcome> {
                 val vm = koinViewModel<WelcomeViewModel>()
                 val state by vm.uiState.collectAsStateWithLifecycle()
@@ -153,7 +169,7 @@ fun NavigationGraph(
                     state = state,
                     uiEffect = effect,
                     viewModel = vm,
-                    onAction ={ action ->
+                    onAction = { action ->
                         coroutineScope.launch {
                             vm.onAction(action)
                         }
@@ -166,10 +182,10 @@ fun NavigationGraph(
                 val effect = vm.uiEffect
                 SignInScreen(
                     viewModel = vm,
-                    state= state,
-                    uiEffect =  effect,
+                    state = state,
+                    uiEffect = effect,
                     onSignUp = { navController.navigate(SignUp) },
-                    onSignIn = { navController.navigate(Main)},
+                    onSignIn = { navController.navigate(Main) },
                 )
             }
         }
