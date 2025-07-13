@@ -48,7 +48,7 @@ fun YourGoalsComponent(allGoals: List<HabitItemData>) {
     ) {
         val colors = LocalColors.current
 
-        Column(modifier = Modifier.fillMaxWidth().padding(horizontal = Dimens.padding16dp)) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             Spacer(modifier = Modifier.size(22.dp))
 
             HeaderText(

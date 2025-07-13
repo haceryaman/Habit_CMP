@@ -67,11 +67,11 @@ private const val DURATION = 1000
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
-    startDestination: Screen.Splash,
+    startDestination: Screen.Main,
     modifier: Modifier = Modifier
 ) {
     val hiddenRoutes = listOf(
-        Welcome::class.qualifiedName,   // artık screen ve string eşlenmiş oldu screen -> string oldu class path veriyo
+        Welcome::class.qualifiedName,
         SignUp::class.qualifiedName,
         SingIn::class.qualifiedName,
     )

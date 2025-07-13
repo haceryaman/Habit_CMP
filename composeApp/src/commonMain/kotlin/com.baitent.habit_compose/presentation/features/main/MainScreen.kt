@@ -1,7 +1,8 @@
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FabPosition
@@ -10,13 +11,8 @@ import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
@@ -36,6 +32,7 @@ fun MainScreen() {
     var showDialog by remember { mutableStateOf(false) }
     val todayText = remember { DateFormatterHelper.getTodayFormattedDate() }
     val colors = LocalColors.current
+    val scrollState = rememberScrollState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -62,8 +59,9 @@ fun MainScreen() {
         floatingActionButtonPosition = FabPosition.End
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().background(color = colors.background),
-            verticalArrangement = Arrangement.Top
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
         ) {
             Text(
                 text = todayText,

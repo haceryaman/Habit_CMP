@@ -1,4 +1,3 @@
-// src/commonMain/kotlin/com/baitent/habit_compose/presentation/features/splash/SplashViewModel.kt
 package com.baitent.habit_compose.presentation.features.splash
 
 import androidx.lifecycle.ViewModel
@@ -18,7 +17,7 @@ import com.baitent.habit_compose.presentation.features.splash.SplashContract.UiE
 import com.baitent.habit_compose.presentation.features.splash.SplashContract.UiAction
 
 class SplashViewModel(
-    private val userRepository: UserRepository
+    //private val userRepository: UserRepository
 ) : ViewModel() , MVI<Unit, UiAction, UiEffect> by mvi(Unit) {
 
     companion object {
