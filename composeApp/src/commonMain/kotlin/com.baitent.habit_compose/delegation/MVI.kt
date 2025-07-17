@@ -8,7 +8,7 @@ interface MVI<UiState, UiAction, UiEffect> {
 
     val uiEffect: Flow<UiEffect>
 
-    suspend fun onAction(uiAction: UiAction)
+    fun onAction(uiAction: UiAction)
 
     fun updateUiState(block: UiState.() -> UiState)
 

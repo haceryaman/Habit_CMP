@@ -10,6 +10,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -25,14 +26,35 @@ import com.baitent.habit_compose.presentation.common.views.components.CreateHabi
 import com.baitent.habit_compose.presentation.common.views.components.HabitProgressCard
 import com.baitent.habit_compose.presentation.common.views.components.YourGoalsComponent
 import com.baitent.habit_compose.presentation.common.views.items.HabitItemData
+import com.baitent.habit_compose.presentation.features.main.MainContract
 import com.baitent.habit_compose.presentation.theme.LocalColors
+import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    uiState: MainContract.UiState,
+    uiEffect: Flow<MainContract.UiEffect>,
+    onAction: (MainContract.UiAction) -> Unit,
+    ) {
     var showDialog by remember { mutableStateOf(false) }
     val todayText = remember { DateFormatterHelper.getTodayFormattedDate() }
-    val colors = LocalColors.current
     val scrollState = rememberScrollState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+
+    LaunchedEffect(uiEffect) {
+        uiEffect.collect { effect ->
+            when (effect) {
+                is MainContract.UiEffect.HabitCreated ->
+                    snackbarHostState.showSnackbar("Yeni habit oluşturuldu!")
+
+                is MainContract.UiEffect.Error ->
+                    snackbarHostState.showSnackbar(effect.message)
+
+            }
+        }
+    }
+
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -102,13 +124,23 @@ fun MainScreen() {
             )
 
         }
-        if (showDialog) {
+        if (uiState.showDialog) {
             CreateHabitDialog(
-                onDismissRequest = { showDialog = false },
-                onCreate = { goal, name, period, type ->
-                    println("Goal=$goal, Name=$name, Period=$period, Type=$type")
-                    showDialog = false
-                }
+                goalText       = uiState.goalText,
+                onGoalChange   = { text -> coroutineScope.launch { onAction(SetGoal(text)) } },
+                habitName      = uiState.habitName,
+                onNameChange   = { name -> coroutineScope.launch { onAction(SetName(name)) } },
+                periodLabel    = uiState.selectedPeriod.label,
+                expandedPeriod = uiState.expandedPeriod,
+                onTogglePeriod = { coroutineScope.launch { onAction(TogglePeriodDropdown) } },
+                onSelectPeriod = { p -> coroutineScope.launch { onAction(SelectPeriod(p)) } },
+                typeLabel      = uiState.selectedType.label,
+                expandedType   = uiState.expandedType,
+                onToggleType   = { coroutineScope.launch { onAction(ToggleTypeDropdown) } },
+                onSelectType   = { t -> coroutineScope.launch { onAction(SelectType(t)) } },
+
+                onDismissRequest = { coroutineScope.launch { onAction(DismissDialog) } },
+                onCreate         = { coroutineScope.launch { onAction(CreateClicked) } }
             )
         }
     }

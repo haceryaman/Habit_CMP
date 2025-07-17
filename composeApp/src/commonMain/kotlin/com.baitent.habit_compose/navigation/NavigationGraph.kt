@@ -67,7 +67,7 @@ private const val DURATION = 1000
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
-    startDestination: Screen.Main,
+    startDestination: Welcome,
     modifier: Modifier = Modifier
 ) {
     val hiddenRoutes = listOf(
@@ -130,7 +130,11 @@ fun NavigationGraph(
                 val vm = koinViewModel<MainViewModel>()
                 val state by vm.uiState.collectAsStateWithLifecycle()
                 val effect = vm.uiEffect
-                MainScreen()
+                MainScreen(
+                    uiState = state,
+                    uiEffect = effect,
+                    onAction =
+                )
             }
             composable<Screen.Splash> {
                 val vm = koinViewModel<SplashViewModel>()

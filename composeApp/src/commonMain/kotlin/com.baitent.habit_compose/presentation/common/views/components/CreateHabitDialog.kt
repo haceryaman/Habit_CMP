@@ -7,7 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,25 +32,36 @@ enum class HabitType(val label: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateHabitDialog(
-    onDismissRequest: () -> Unit,
-    onCreate: (goal: String, name: String, period: Period, type: HabitType) -> Unit
-) {
-    var goalText by remember { mutableStateOf("") }
-    var habitName by remember { mutableStateOf("") }
-    var expandedPeriod by remember { mutableStateOf(false) }
-    var expandedType by remember { mutableStateOf(false) }
-    var selectedPeriod by remember { mutableStateOf(Period.OneMonth) }
-    var selectedType by remember { mutableStateOf(HabitType.Everyday) }
+    // MVI’den gelen state ve lambda’lar:
+    goalText: String,
+    onGoalChange: (String) -> Unit,
+    habitName: String,
+    onNameChange: (String) -> Unit,
+    periodLabel: String,
+    expandedPeriod: Boolean,
+    onTogglePeriod: () -> Unit,
+    onSelectPeriod: (Period) -> Unit,
+    typeLabel: String,
+    expandedType: Boolean,
+    onToggleType: () -> Unit,
+    onSelectType: (HabitType) -> Unit,
 
+    // Sadece dialog kontrolü:
+    onDismissRequest: () -> Unit,
+    onCreate: () -> Unit
+) {
     Dialog(onDismissRequest = onDismissRequest) {
         Card(
             modifier = Modifier
                 .width(360.dp)
                 .wrapContentHeight(),
             shape = RoundedCornerShape(16.dp),
-
+        ) {
+            Column(
+                modifier = Modifier
+                    .background(Color.White)
+                    .padding(16.dp)
             ) {
-            Column(modifier = Modifier.background(Color.White).padding(16.dp)) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -59,107 +70,88 @@ fun CreateHabitDialog(
                     Text("Create New Habit Goal", style = MaterialTheme.typography.titleLarge)
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = null,
+                        contentDescription = "Close",
                         modifier = Modifier
                             .size(24.dp)
                             .clickable { onDismissRequest() }
                     )
                 }
 
-                Spacer(Modifier.height(8.dp))
-                HorizontalDivider()
-                Spacer(Modifier.height(16.dp))
-
-                // Your Goal
+                Spacer(Modifier.height(12.dp))
                 Text("Your Goal", style = MaterialTheme.typography.bodyMedium)
                 OutlinedTextField(
                     value = goalText,
-                    onValueChange = { goalText = it },
+                    onValueChange = onGoalChange,
                     placeholder = { Text("Enter your goal") },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
+                )
 
-                    )
                 Spacer(Modifier.height(12.dp))
-
-                // Habit Name
                 Text("Habit Name", style = MaterialTheme.typography.bodyMedium)
                 OutlinedTextField(
                     value = habitName,
-                    onValueChange = { habitName = it },
+                    onValueChange = onNameChange,
                     placeholder = { Text("e.g. Drink water") },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ExposedDropdownMenuDefaults.textFieldColors(
-
-                    )
+                    modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(Modifier.height(12.dp))
 
-                // Period Dropdown
+                Spacer(Modifier.height(12.dp))
                 Text("Period", style = MaterialTheme.typography.bodyMedium)
                 ExposedDropdownMenuBox(
                     expanded = expandedPeriod,
-                    onExpandedChange = { expandedPeriod = !expandedPeriod }
+                    onExpandedChange = { onTogglePeriod() }
                 ) {
                     OutlinedTextField(
-                        value = selectedPeriod.label,
+                        value = periodLabel,
                         onValueChange = {},
                         readOnly = true,
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expandedPeriod) },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .menuAnchor(type = MenuAnchorType.PrimaryEditable)          // ← Burayı ekleyin
+                            .menuAnchor(type = MenuAnchorType.PrimaryEditable)
                     )
                     ExposedDropdownMenu(
                         expanded = expandedPeriod,
-                        onDismissRequest = { expandedPeriod = false }
+                        onDismissRequest = { onTogglePeriod() }
                     ) {
                         Period.entries.forEach { p ->
                             DropdownMenuItem(
                                 text = { Text(p.label) },
-                                onClick = {
-                                    selectedPeriod = p
-                                    expandedPeriod = false
-                                }
+                                onClick = { onSelectPeriod(p) }
                             )
                         }
                     }
                 }
 
                 Spacer(Modifier.height(12.dp))
-
-                // Habit Type Dropdown
                 Text("Habit Type", style = MaterialTheme.typography.bodyMedium)
                 ExposedDropdownMenuBox(
                     expanded = expandedType,
-                    onExpandedChange = { expandedType = !expandedType }
+                    onExpandedChange = { onToggleType() }
                 ) {
                     OutlinedTextField(
-                        value = selectedType.label,
+                        value = typeLabel,
                         onValueChange = {},
                         readOnly = true,
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expandedType) },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .menuAnchor(type = MenuAnchorType.PrimaryEditable)          // ← Ve burada da
+                            .menuAnchor(type = MenuAnchorType.PrimaryEditable)
                     )
                     ExposedDropdownMenu(
                         expanded = expandedType,
-                        onDismissRequest = { expandedType = false }
+                        onDismissRequest = { onToggleType() }
                     ) {
-                        HabitType.values().forEach { t ->
+                        HabitType.entries.forEach { t ->
                             DropdownMenuItem(
                                 text = { Text(t.label) },
-                                onClick = {
-                                    selectedType = t
-                                    expandedType = false
-                                }
+                                onClick = { onSelectType(t) }
                             )
                         }
                     }
                 }
 
-                Spacer(Modifier.height(20.dp))
-
+                Spacer(Modifier.height(24.dp))
                 val gradient = Brush.horizontalGradient(
                     colors = listOf(Color(0xFFF37335), Color(0xFFFF8C00))
                 )
@@ -169,16 +161,10 @@ fun CreateHabitDialog(
                         .height(48.dp)
                         .clip(RoundedCornerShape(8.dp))
                         .background(gradient)
-                        .clickable {
-                            onCreate(goalText, habitName, selectedPeriod, selectedType)
-                        },
+                        .clickable { onCreate() },
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        "Create Habit",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = Color.White
-                    )
+                    Text("Create Habit", color = Color.White, style = MaterialTheme.typography.bodyLarge)
                 }
             }
         }

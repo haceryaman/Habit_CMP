@@ -19,7 +19,7 @@ fun App() {
         NavigationGraph(
             modifier = Modifier,
             navController = navController,
-            startDestination = Screen.Main
+            startDestination = Screen.Welcome
         )
     }
 }
