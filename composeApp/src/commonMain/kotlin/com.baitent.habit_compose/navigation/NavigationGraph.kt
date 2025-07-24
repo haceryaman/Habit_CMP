@@ -133,7 +133,7 @@ fun NavigationGraph(
                 MainScreen(
                     uiState = state,
                     uiEffect = effect,
-                    onAction =
+                    onAction = vm::onAction
                 )
             }
             composable<Screen.Splash> {
@@ -175,7 +175,7 @@ fun NavigationGraph(
                     viewModel = vm,
                     onAction = { action ->
                         coroutineScope.launch {
-                            vm.onAction(action)
+                           // vm.onAction(action)
                         }
                     }
                 )

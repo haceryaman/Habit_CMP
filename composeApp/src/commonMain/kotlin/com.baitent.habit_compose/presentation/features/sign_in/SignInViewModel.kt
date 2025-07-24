@@ -22,7 +22,7 @@ class SignInViewModel(
 
     private val auth: FirebaseAuth = Firebase.auth
 
-    override suspend fun onAction(uiAction: SignInContract.UiAction) {
+    override fun onAction(uiAction: SignInContract.UiAction) {
         when (uiAction) {
             is SignInContract.UiAction.OnEmailChanged -> updateUiState {
                 copy(email = uiAction.email).enableButtonIfValid()
@@ -46,11 +46,16 @@ class SignInViewModel(
 
             SignInContract.UiAction.OnGoogleSignInClick -> {
                 // TODO: Google Sign-In flow’u ekle
-                emitUiEffect(SignInContract.UiEffect.NavigateHome)
+                viewModelScope.launch {
+                    emitUiEffect(SignInContract.UiEffect.NavigateHome)
+
+                }
             }
 
             SignInContract.UiAction.OnSignUpClick -> {
-                emitUiEffect(SignInContract.UiEffect.NavigateSignUp)
+                viewModelScope.launch {
+                    emitUiEffect(SignInContract.UiEffect.NavigateSignUp)
+                }
             }
 
             SignInContract.UiAction.OnDialogDismiss -> updateUiState {
@@ -59,11 +64,16 @@ class SignInViewModel(
         }
     }
 
-    private suspend fun handleForgotPassword() {
+    private fun handleForgotPassword() {
         val email = uiState.value.email
         if (email.isBlank()) {
-            emitUiEffect(SignInContract.UiEffect.ShowSnackbar("Lütfen önce e-postanızı girin"))
-        } else {
+            viewModelScope.launch {
+                emitUiEffect(SignInContract.UiEffect.ShowSnackbar("Lütfen önce e-postanızı girin"))
+            }
+            return
+        }
+
+        viewModelScope.launch {
             try {
                 auth.sendPasswordResetEmail(email)
                 emitUiEffect(SignInContract.UiEffect.ShowSnackbar("Şifre sıfırlama e-postası gönderildi"))
@@ -76,6 +86,7 @@ class SignInViewModel(
             }
         }
     }
+
 
     private fun onSignIn(
         email: String,

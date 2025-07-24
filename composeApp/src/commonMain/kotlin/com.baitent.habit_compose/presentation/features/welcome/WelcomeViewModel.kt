@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class WelcomeViewModel : ViewModel(), MVI<UiState, UiAction, UiEffect> by mvi(UiState()) {
 
-    override suspend fun onAction(uiAction: UiAction) {
+    override fun onAction(uiAction: UiAction) {
         viewModelScope.launch {
         }
     }

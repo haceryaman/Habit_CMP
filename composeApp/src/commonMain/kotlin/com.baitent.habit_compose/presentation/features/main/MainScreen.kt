@@ -124,7 +124,7 @@ fun MainScreen(
             )
 
         }
-        if (uiState.showDialog) {
+       /*  if (uiState.showDialog) {
             CreateHabitDialog(
                 goalText       = uiState.goalText,
                 onGoalChange   = { text -> coroutineScope.launch { onAction(SetGoal(text)) } },
@@ -142,6 +142,6 @@ fun MainScreen(
                 onDismissRequest = { coroutineScope.launch { onAction(DismissDialog) } },
                 onCreate         = { coroutineScope.launch { onAction(CreateClicked) } }
             )
-        }
+        }*/
     }
 }
